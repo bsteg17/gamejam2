@@ -83,7 +83,7 @@ var blackBgTile = new Image();
 blackBgTile.onload = function () {
     blackBgTileReady = true;
 };
-blackBgTile.src = "whiteBlock.png";
+blackBgTile.src = "Content/whiteBlock.png";
 
 // Sand image
 var greenBgTileReady = false;
@@ -91,7 +91,7 @@ var greenBgTile = new Image();
 greenBgTile.onload = function () {
     greenBgTileReady = true;
 };
-greenBgTile.src = "greenBlock.png";
+greenBgTile.src = "Content/greenBlock.png";
 
 // Set start position for grass and sand
 var posX = 0;
@@ -131,9 +131,10 @@ var mapGrid = {
     y: 0,
     width: 0,
     height: 0,
-	rowSize: mapArray[0].length,
-	columnSize: mapArray.Length,
-    tileSize: 0
+	rowSize: mapArray[0].length, // Number of elements in each row ( number of columns )
+	columnSize: mapArray.Length, // Number of elements in each column ( number of rows )
+    tileHeight: 0,
+	tileWidth: 0
 };
 
 var commandLine = {
@@ -158,28 +159,24 @@ var initActionAndCommand = function () {
 	// Set the width for the objects
     commandBackground.width = canvas.width;
     theAction.width = canvas.width;
-	mapGrid.Width = canvas.width;
-
+	
+    // Set the height for the objects
+	commandBackground.height = 50; //The only value that should be messed with. This determines the height of the commandBackground line in pixels.
+    theAction.height = canvas.height - commandBackground.height;
+	
 	// Set the start position for the objects
     theAction.x = 0;
     theAction.y = 0;
 	
-	mapGrid.x = 0;
-	mapGrid.y = 0;
-	
 	commandBackground.x = 0;
-    commandBackground.height = 50; //The only value that should be messed with. This determines the height of the commandBackground line in pixels..y = theAction.height;
-
-    // Set the height for the objects
-	commandBackground.height = 50; //The only value that should be messed with. This determines the height of the commandBackground line in pixels.
-    theAction.height = canvas.height - commandBackground.height;
-	mapGrid.height = canvas.height - commandBackground.height;
+	commandBackground.y = theAction.height;
 	
 	// Set the image for the objects
     theAction.image = theActionImage;
     commandBackground.image = commandBackgroundImage;
 };
 
+/* Set the values for the map grid */
 var initMapGrid = function () {
 	// Set the width for the objects
 	mapGrid.Width = canvas.width;
@@ -190,6 +187,10 @@ var initMapGrid = function () {
 
     // Set the height for the objects
 	mapGrid.height = canvas.height - commandBackground.height;
+	
+	// Set the tile size
+	mapGrid.tileHeight = mapGrid.height / mapGrid.columnSize;
+	mapGrid.tileWidth = mapGrid.width / mapGrid.rowSize;
 }
 
 var initCommandLine = function () {
@@ -314,21 +315,21 @@ var render = function () {
 			for(var j = 0; j < mapArray[i].length; j++ ) {
 				// Draw grass image for elements in array that equal zero
 				if( mapArray[i][j] == 0 ) {
-					ctx.drawImage( blackBgTile, posX, posY, 32, 32 );
+					ctx.drawImage( blackBgTile, posX, posY, mapGrid.tileWidth, mapGrid.tileHeight );
 				}
 				// Draw sand image for elements in array that equal one
 				if( mapArray[i][j] == 1 ) {
-					ctx.drawImage( greenBgTile, posX, posY, 32, 32 );
+					ctx.drawImage( greenBgTile, posX, posY, mapGrid.tileWidth, mapGrid.tileHeight );
 				}
 
 				//Change the x-axis start position for the next tile
-				posX+=32;
+				posX += mapGrid.tileWidth;
 			}
 			// Reset the x-axis position back to 0 so that the rows transition properly
 			posX = 0;
 			
 			// Change the y-axis start position for the next tile row
-			posY+=32;
+			posY += mapGrid.tileHeight;
 		}
 	}
 
