@@ -1,3 +1,6 @@
+// Constants
+ROWS_OF_GROUND = 2; // The number of rows from the bottom of the array that are going to serve as the ground
+
 // Create the canvas
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
@@ -53,28 +56,28 @@ cursorImage.onload = function () {
 };
 cursorImage.src = "Content/cursor.png";
 
-
-
-/* // Google image
-var googleReady = false;
-var googleImage = new Image();
-googleImage.onload = function () {
-    googleReady = true;
-};
-googleImage.src = "google-panda-penguin.jpg"; */
-
 // Create the array for the virtual world part of the screen
 var mapArray = [
-	[0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,1,1,1,1,1,0,0,0,0,0],
-	[0,0,0,0,0,1,1,1,1,1,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0]
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 ];
 
 // Grass image
@@ -83,7 +86,7 @@ var blackBgTile = new Image();
 blackBgTile.onload = function () {
     blackBgTileReady = true;
 };
-blackBgTile.src = "Content/whiteBlock.png";
+blackBgTile.src = "Content/blackBlock.png";
 
 // Sand image
 var greenBgTileReady = false;
@@ -156,7 +159,7 @@ var mapGrid = {
     width: 0,
     height: 0,
 	rowSize: mapArray[0].length, // Number of elements in each row ( number of columns )
-	columnSize: mapArray.Length, // Number of elements in each column ( number of rows )
+	columnSize: mapArray.length, // Number of elements in each column ( number of rows )
     tileHeight: 0,
 	tileWidth: 0
 };
@@ -177,6 +180,26 @@ var cursor = {
     blinkRate: 0,
     lastBlink: 0,
     blinking: false
+};
+
+var createGround = function(){
+	console.log( mapArray.length );
+
+	// Change the bottom x lines of the mapGrid to ground values
+	for(i = mapArray.length - 1; i > ( mapArray.length - ( ROWS_OF_GROUND + 1 ) ); i--) {
+		console.log(i);
+	
+		for(var j = 0; j < mapGrid.rowSize; j++){
+			console.log(j);
+		
+			console.log(mapArray[i][j]);
+		
+			mapArray[i][j] = 1;
+			
+			console.log(mapArray[i][j]);
+		}
+		//mapArray[i] = 1;
+	}
 };
 
 var initActionAndCommand = function () {
@@ -203,8 +226,8 @@ var initActionAndCommand = function () {
 
 /* Set the values for the map grid */
 var initMapGrid = function () {
-    // Set the width for the objects
-    mapGrid.Width = canvas.width;
+	// Set the width for the objects
+	mapGrid.width = canvas.width;
 
     // Set the start position for the objects
     mapGrid.x = 0;
@@ -239,6 +262,10 @@ var initCursor = function () {
     cursor.lastBlink = Date.now();
     cursor.blinkRate = 300;
     cursor.blinking = true;
+};
+
+var getCharacterPosition = function() {
+	// Determine
 };
 
 addEventListener("keyup", function (e) {
@@ -329,7 +356,6 @@ var update = function (modifier) {
 
 // Draw everything
 var render = function () {
-
 	// Make sure that the grass and sand have been read in
 	if( blackBgTileReady && greenBgTileReady ) {
 		// Draw the array
@@ -354,20 +380,13 @@ var render = function () {
 			posY += mapGrid.tileHeight;
 		}
 	}
-
-/* 	// Draw rectangle
+	
+	// Create a circle for the character's head
 	ctx.beginPath();
-	ctx.rect(0, 0, 100, 100);
-	ctx.fillStyle = 'yellow';
-	ctx.fill();
-	ctx.lineWidth = 7;
-	ctx.strokeStyle = 'red';
-	ctx.stroke(); */
-
-/* 	// Draw google image
-	if (googleReady) {
-	    ctx.drawImage(googleImage, 0, 0, 500, 500);
-	} */
+	ctx.arc(100,200,15,0,2*Math.PI);
+	ctx.lineWidth = 5;
+	ctx.strokeStyle = 'yellow';
+	ctx.stroke();
 
 	// Draw command screen
 	if (commandBackgroundReady) {
@@ -407,9 +426,12 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 
 // Let's play this game!
 
+createGround();
 initActionAndCommand();
+initMapGrid();
 initCommandLine();
 initCursor();
+//createCharacter();
 var then = Date.now();
 reset();
 main();
