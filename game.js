@@ -65,16 +65,26 @@ googleImage.src = "google-panda-penguin.jpg"; */
 
 // Create the array for the virtual world part of the screen
 var mapArray = [
-	[0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,1,1,1,1,1,0,0,0,0,0],
-	[0,0,0,0,0,1,1,1,1,1,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0]
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+	[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ];
 
 // Grass image
@@ -83,7 +93,7 @@ var blackBgTile = new Image();
 blackBgTile.onload = function () {
     blackBgTileReady = true;
 };
-blackBgTile.src = "Content/whiteBlock.png";
+blackBgTile.src = "Content/blackBlock.png";
 
 // Sand image
 var greenBgTileReady = false;
@@ -132,7 +142,7 @@ var mapGrid = {
     width: 0,
     height: 0,
 	rowSize: mapArray[0].length, // Number of elements in each row ( number of columns )
-	columnSize: mapArray.Length, // Number of elements in each column ( number of rows )
+	columnSize: mapArray.length, // Number of elements in each column ( number of rows )
     tileHeight: 0,
 	tileWidth: 0
 };
@@ -179,7 +189,7 @@ var initActionAndCommand = function () {
 /* Set the values for the map grid */
 var initMapGrid = function () {
 	// Set the width for the objects
-	mapGrid.Width = canvas.width;
+	mapGrid.width = canvas.width;
 
 	// Set the start position for the objects
 	mapGrid.x = 0;
@@ -191,6 +201,8 @@ var initMapGrid = function () {
 	// Set the tile size
 	mapGrid.tileHeight = mapGrid.height / mapGrid.columnSize;
 	mapGrid.tileWidth = mapGrid.width / mapGrid.rowSize;
+	
+	console.log( mapGrid );
 }
 
 var initCommandLine = function () {
@@ -303,11 +315,6 @@ var update = function (modifier) {
 
 // Draw everything
 var render = function () {
-	// Draw action screen
-	if (theActionReady) {
-	    ctx.drawImage(theActionImage, theAction.x, theAction.y, theAction.width, theAction.height);
-	}
-
 	// Make sure that the grass and sand have been read in
 	if( blackBgTileReady && greenBgTileReady ) {
 		// Draw the array
@@ -316,20 +323,24 @@ var render = function () {
 				// Draw grass image for elements in array that equal zero
 				if( mapArray[i][j] == 0 ) {
 					ctx.drawImage( blackBgTile, posX, posY, mapGrid.tileWidth, mapGrid.tileHeight );
+					//ctx.drawImage( blackBgTile, posX, posY, 32, 32 );
 				}
 				// Draw sand image for elements in array that equal one
 				if( mapArray[i][j] == 1 ) {
 					ctx.drawImage( greenBgTile, posX, posY, mapGrid.tileWidth, mapGrid.tileHeight );
+					//ctx.drawImage( greenBgTile, posX, posY, 32, 32 );
 				}
 
 				//Change the x-axis start position for the next tile
 				posX += mapGrid.tileWidth;
+				//posX += 32;
 			}
 			// Reset the x-axis position back to 0 so that the rows transition properly
 			posX = 0;
 			
 			// Change the y-axis start position for the next tile row
 			posY += mapGrid.tileHeight;
+			//posY += 32;
 		}
 	}
 
@@ -381,6 +392,7 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 // Let's play this game!
 
 initActionAndCommand();
+initMapGrid();
 initCommandLine();
 initCursor();
 var then = Date.now();
