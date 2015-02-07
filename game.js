@@ -1,3 +1,6 @@
+// Constants
+ROWS_OF_GROUND = 2; // The number of rows from the bottom of the array that are going to serve as the ground
+
 // Create the canvas
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
@@ -53,16 +56,6 @@ cursorImage.onload = function () {
 };
 cursorImage.src = "Content/cursor.png";
 
-
-
-/* // Google image
-var googleReady = false;
-var googleImage = new Image();
-googleImage.onload = function () {
-    googleReady = true;
-};
-googleImage.src = "google-panda-penguin.jpg"; */
-
 // Create the array for the virtual world part of the screen
 var mapArray = [
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -83,8 +76,8 @@ var mapArray = [
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-	[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 ];
 
 // Grass image
@@ -165,6 +158,26 @@ var cursor = {
     blinking: false
 };
 
+var createGround = function(){
+	console.log( mapArray.length );
+
+	// Change the bottom x lines of the mapGrid to ground values
+	for(i = mapArray.length - 1; i > ( mapArray.length - ( ROWS_OF_GROUND + 1 ) ); i--) {
+		console.log(i);
+	
+		for(var j = 0; j < mapGrid.rowSize; j++){
+			console.log(j);
+		
+			console.log(mapArray[i][j]);
+		
+			mapArray[i][j] = 1;
+			
+			console.log(mapArray[i][j]);
+		}
+		//mapArray[i] = 1;
+	}
+};
+
 var initActionAndCommand = function () {
 	// Set the width for the objects
     commandBackground.width = canvas.width;
@@ -225,6 +238,10 @@ var initCursor = function () {
     cursor.lastBlink = Date.now();
     cursor.blinkRate = 300;
     cursor.blinking = true;
+};
+
+var getCharacterPosition = function() {
+	// Determine
 };
 
 // Handle keyboard controls
@@ -323,40 +340,29 @@ var render = function () {
 				// Draw grass image for elements in array that equal zero
 				if( mapArray[i][j] == 0 ) {
 					ctx.drawImage( blackBgTile, posX, posY, mapGrid.tileWidth, mapGrid.tileHeight );
-					//ctx.drawImage( blackBgTile, posX, posY, 32, 32 );
 				}
 				// Draw sand image for elements in array that equal one
 				if( mapArray[i][j] == 1 ) {
 					ctx.drawImage( greenBgTile, posX, posY, mapGrid.tileWidth, mapGrid.tileHeight );
-					//ctx.drawImage( greenBgTile, posX, posY, 32, 32 );
 				}
 
 				//Change the x-axis start position for the next tile
 				posX += mapGrid.tileWidth;
-				//posX += 32;
 			}
 			// Reset the x-axis position back to 0 so that the rows transition properly
 			posX = 0;
 			
 			// Change the y-axis start position for the next tile row
 			posY += mapGrid.tileHeight;
-			//posY += 32;
 		}
 	}
-
-/* 	// Draw rectangle
+	
+	// Create a circle for the character's head
 	ctx.beginPath();
-	ctx.rect(0, 0, 100, 100);
-	ctx.fillStyle = 'yellow';
-	ctx.fill();
-	ctx.lineWidth = 7;
-	ctx.strokeStyle = 'red';
-	ctx.stroke(); */
-
-/* 	// Draw google image
-	if (googleReady) {
-	    ctx.drawImage(googleImage, 0, 0, 500, 500);
-	} */
+	ctx.arc(100,200,15,0,2*Math.PI);
+	ctx.lineWidth = 5;
+	ctx.strokeStyle = 'yellow';
+	ctx.stroke();
 
 	// Draw command screen
 	if (commandBackgroundReady) {
@@ -391,10 +397,12 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 
 // Let's play this game!
 
+createGround();
 initActionAndCommand();
 initMapGrid();
 initCommandLine();
 initCursor();
+//createCharacter();
 var then = Date.now();
 reset();
 main();
