@@ -83,7 +83,7 @@ var blackBgTile = new Image();
 blackBgTile.onload = function () {
     blackBgTileReady = true;
 };
-blackBgTile.src = "grass.png";
+blackBgTile.src = "whiteBlock.png";
 
 // Sand image
 var greenBgTileReady = false;
@@ -91,7 +91,7 @@ var greenBgTile = new Image();
 greenBgTile.onload = function () {
     greenBgTileReady = true;
 };
-greenBgTile.src = "Sand.png";
+greenBgTile.src = "greenBlock.png";
 
 // Set start position for grass and sand
 var posX = 0;
@@ -179,6 +179,18 @@ var initActionAndCommand = function () {
     theAction.image = theActionImage;
     commandBackground.image = commandBackgroundImage;
 };
+
+var initMapGrid = function () {
+	// Set the width for the objects
+	mapGrid.Width = canvas.width;
+
+	// Set the start position for the objects
+	mapGrid.x = 0;
+	mapGrid.y = 0;
+
+    // Set the height for the objects
+	mapGrid.height = canvas.height - commandBackground.height;
+}
 
 var initCommandLine = function () {
     commandLine.x = commandBackground.x + 10;
