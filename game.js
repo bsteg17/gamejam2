@@ -93,6 +93,30 @@ greenBgTile.onload = function () {
 };
 greenBgTile.src = "Content/greenBlock.png";
 
+var alphanumeric = [];
+for (i = 48; i < 91; i++) {
+    if (i < 58 || i > 64) {
+        alphanumeric.push(String.fromCharCode(i));
+    }
+    console.log(alphanumeric[i]); //debug
+}
+
+//Character images
+var charReady = [];
+for (i = 0; i < 37; i++) {
+    charReady.push(false);
+}
+var charImages = [];
+for (i = 0; i < 37; i++) {
+    charImages.push(new Image());
+    charImages[i].onload = function () {
+        charReady = true;
+    };
+    charImages[i].src = "Content/Alphanumeric/" + alphanumeric[i] + ".png";
+}
+  
+greenBgTile.src = "Content/greenBlock.png";
+
 // Set start position for grass and sand
 var posX = 0;
 var posY = 0;
@@ -131,9 +155,10 @@ var mapGrid = {
     y: 0,
     width: 0,
     height: 0,
-	rowSize: mapArray[0].length,
-	columnSize: mapArray.Length,
-    tileSize: 0
+	rowSize: mapArray[0].length, // Number of elements in each row ( number of columns )
+	columnSize: mapArray.Length, // Number of elements in each column ( number of rows )
+    tileHeight: 0,
+	tileWidth: 0
 };
 
 var commandLine = {
@@ -159,23 +184,24 @@ var initActionAndCommand = function () {
     commandBackground.width = canvas.width;
     theAction.width = canvas.width;
 
-	// Set the start position for the objects
-    theAction.x = 0;
-    theAction.y = 0;
-	
-	commandBackground.x = 0;
-    commandBackground.height = 50; //The only value that should be messed with. This determines the height of the commandBackground line in pixels..y = theAction.height;
-
     // Set the height for the objects
 	commandBackground.height = 50; //The only value that should be messed with. This determines the height of the commandBackground line in pixels.
     theAction.height = canvas.height - commandBackground.height;
+
+    //Set position of theAction
+    theAction.x = 0;
+    theAction.y = 0;
 	
-    // Set the image for the objects
+    //Set position of commandBackground
+    commandBackground.x = 0;
     commandBackground.y = theAction.height;
+
+    // Set the image for the objects
     theAction.image = theActionImage;
     commandBackground.image = commandBackgroundImage;
 };
 
+/* Set the values for the map grid */
 var initMapGrid = function () {
     // Set the width for the objects
     mapGrid.Width = canvas.width;
@@ -186,6 +212,10 @@ var initMapGrid = function () {
 
     // Set the height for the objects
     mapGrid.height = canvas.height - commandBackground.height;
+	
+    // Set the tile size
+    mapGrid.tileHeight = mapGrid.height / mapGrid.columnSize;
+    mapGrid.tileWidth = mapGrid.width / mapGrid.rowSize;
 };
 
 var initCommandLine = function () {
@@ -195,6 +225,7 @@ var initCommandLine = function () {
     commandLine.height = 10;
     commandLine.charWidth = 5;
     commandLine.string = [];
+    commandLine.maxChars = 10;
     commandLine.keyPressed = null;
     commandLine.mayType = true;
 };
@@ -210,16 +241,14 @@ var initCursor = function () {
     cursor.blinking = true;
 };
 
-
-
-addEventListener("keydown", function (e) {
-    commandLine.keyPressed = e.keyCode;
-    console.log(e.keyCode); //debug
+addEventListener("keyup", function (e) {
+    commandLine.mayType = true;
 }, false);
 
-addEventListener("keyup", function (e) {
-    commandLine.keyPressed = null;
-    commandLine.mayType = true;
+addEventListener("keydown", function (e) {
+    if (commandLine.mayType == true) {
+        commandLine.keyPressed = e.keyCode;
+    }
 }, false);
 
 // Reset the game when the player catches a monster
@@ -241,6 +270,10 @@ var updateCommandLine = function () {
         cursor.blinking = !cursor.blinking;
         cursor.lastBlink = Date.now();
     }
+};
+
+var sendResponse = function () {
+
 };
 
 // Update game objects
@@ -270,15 +303,25 @@ var update = function (modifier) {
     //}
 
     if (commandLine.mayType) {
-        switch (commandLine.keyPressed) {
-            case 69:
-                commandLine.string.push(' ');
+        if (commandLine.keyPressed == 8) {
+            if (cursor.position > 0) {
+                commandLine.string.pop();
+                cursor.position -= 1;
+            }
+            commandLine.mayType = false;
+        } else if (commandLine.keyPressed >= 48 && commandLine.keyPressed < 91) {
+            if (cursor.position <= commandLine.maxChars) {
+                commandLine.string.push(String.fromCharCode(commandLine.keyPressed));
                 cursor.position += 1;
-                break;
-            default:
-                console.log("WRONG KID DIED"); //debug
+            }
+            commandLine.mayType = false;
+        } else if (commandLine.keyPressed == 13) {
+            commandLine.string = [];
+            cursor.position = 0;
+            sendResponse();
+        } else {
+            console.log("WRONG KID DIED"); //debug
         }
-        commandLine.mayType = false;
     }
 
     updateCommandLine();
@@ -286,10 +329,6 @@ var update = function (modifier) {
 
 // Draw everything
 var render = function () {
-	// Draw action screen
-	if (theActionReady) {
-	    ctx.drawImage(theActionImage, theAction.x, theAction.y, theAction.width, theAction.height);
-	}
 
 	// Make sure that the grass and sand have been read in
 	if( blackBgTileReady && greenBgTileReady ) {
@@ -298,21 +337,21 @@ var render = function () {
 			for(var j = 0; j < mapArray[i].length; j++ ) {
 				// Draw grass image for elements in array that equal zero
 				if( mapArray[i][j] == 0 ) {
-					ctx.drawImage( blackBgTile, posX, posY, 32, 32 );
+					ctx.drawImage( blackBgTile, posX, posY, mapGrid.tileWidth, mapGrid.tileHeight );
 				}
 				// Draw sand image for elements in array that equal one
 				if( mapArray[i][j] == 1 ) {
-					ctx.drawImage( greenBgTile, posX, posY, 32, 32 );
+					ctx.drawImage( greenBgTile, posX, posY, mapGrid.tileWidth, mapGrid.tileHeight );
 				}
 
 				//Change the x-axis start position for the next tile
-				posX+=32;
+				posX += mapGrid.tileWidth;
 			}
 			// Reset the x-axis position back to 0 so that the rows transition properly
 			posX = 0;
 			
 			// Change the y-axis start position for the next tile row
-			posY+=32;
+			posY += mapGrid.tileHeight;
 		}
 	}
 
@@ -331,12 +370,17 @@ var render = function () {
 	} */
 
 	// Draw command screen
-	//if (commandBackgroundReady) {
-	//    ctx.drawImage(commandBackgroundImage, commandBackground.x, commandBackground.y, commandBackground.width, commandBackground.height);
-	//}
+	if (commandBackgroundReady) {
+	    ctx.drawImage(commandBackgroundImage, commandBackground.x, commandBackground.y, commandBackground.width, commandBackground.height);
+	};
+	if (commandLine.string.length > 0) {
+	    for (i = 0; i < commandLine.string.length; i++) {
+	        ctx.drawImage(charImages[i], commandLine.x + (cursor.width * commandLine.position), cursor.y, cursor.width, cursor.height);
+	    }
+	}
 	if (cursorReady && cursor.blinking) {
 	    ctx.drawImage(cursorImage, cursor.x, cursor.y, cursor.width, cursor.height);
-	}
+	};
 	
 	// Reset position values
 	posX = 0;
