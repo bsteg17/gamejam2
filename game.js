@@ -29,6 +29,22 @@ monsterImage.onload = function () {
 };
 monsterImage.src = "Content/monser.jpg";
 
+// Background image
+var theActionReady = false;
+var theActionImage = new Image();
+theActionImage.onload = function () {
+    theActionReady = true;
+};
+theActionImage.src = "Content/black.jpg";
+
+// Background image
+var commandReady = false;
+var commandImage = new Image();
+commandImage.onload = function () {
+    commandReady = true;
+};
+commandImage.src = "Content/black.jpg";
+
 // Game objects
 var hero = {
 	speed: 256, // movement in pixels per second
@@ -40,6 +56,39 @@ var monster = {
 	y: 0
 };
 var monstersCaught = 0;
+
+var theAction = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+    image: new Image()
+};
+
+var command = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+    image: new Image()
+};
+
+var initActionAndCommand = function () {
+
+    command.width = canvas.width;
+    theAction.width = canvas.width;
+
+    theAction.x = 0;
+    theAction.y = 0;
+    
+    command.height = 50; //The only value that should be messed with. This determines the height of the command line in pixels.
+    theAction.height = canvas.height - command.height;
+    command.x = 0;
+    command.y = theAction.height;
+
+    theAction.image = theActionImage;
+    command.image = commandImage;
+};
 
 // Handle keyboard controls
 var keysDown = {};
@@ -102,24 +151,12 @@ var update = function (modifier) {
 
 // Draw everything
 var render = function () {
-	if (bgReady) {
-		ctx.drawImage(bgImage, 0, 0);
+	if (theActionReady) {
+	    ctx.drawImage(theActionImage, theAction.x, theAction.y, theAction.width, theAction.height);
 	}
-
-	if (heroReady) {
-		ctx.drawImage(heroImage, hero.x, hero.y);
+	if (commandReady) {
+	    ctx.drawImage(commandImage, command.x, command.y, command.width, command.height);
 	}
-
-	if (monsterReady) {
-		ctx.drawImage(monsterImage, monster.x, monster.y);
-	}
-
-	// Score
-	ctx.fillStyle = "rgb(250, 250, 250)";
-	ctx.font = "24px Helvetica";
-	ctx.textAlign = "left";
-	ctx.textBaseline = "top";
-	ctx.fillText("Monsterrs caught: " + monstersCaught, 32, 32);
 };
 
 // The main game loop
@@ -141,6 +178,8 @@ var w = window;
 requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame
 
 // Let's play this game!
+
+initActionAndCommand();
 var then = Date.now();
 reset();
 main();
