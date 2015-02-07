@@ -1,8 +1,8 @@
 // Create the canvas
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
-canvas.width = 512;
-canvas.height = 480;
+canvas.width = 500;
+canvas.height = 400;
 document.body.appendChild(canvas);
 
 // Background image
@@ -29,7 +29,7 @@ monsterImage.onload = function () {
 };
 monsterImage.src = "Content/monser.jpg";
 
-// Background image
+// Virtual world background image
 var theActionReady = false;
 var theActionImage = new Image();
 theActionImage.onload = function () {
@@ -37,13 +37,55 @@ theActionImage.onload = function () {
 };
 theActionImage.src = "Content/black.jpg";
 
-// Background image
+// Command line background image
 var commandReady = false;
 var commandImage = new Image();
 commandImage.onload = function () {
     commandReady = true;
 };
 commandImage.src = "Content/black.jpg";
+
+/* // Google image
+var googleReady = false;
+var googleImage = new Image();
+googleImage.onload = function () {
+    googleReady = true;
+};
+googleImage.src = "google-panda-penguin.jpg"; */
+
+// Create the array for the virtual world part of the screen
+var mapArray = [
+	[0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,1,1,1,1,1,0,0,0,0,0],
+	[0,0,0,0,0,1,1,1,1,1,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0,1,1,0,0,0,0,0]
+];
+
+// Grass image
+var blackBgTileReady = false;
+var blackBgTile = new Image();
+blackBgTile.onload = function () {
+    blackBgTileReady = true;
+};
+blackBgTile.src = "grass.png";
+
+// Sand image
+var greenBgTileReady = false;
+var greenBgTile = new Image();
+greenBgTile.onload = function () {
+    greenBgTileReady = true;
+};
+greenBgTile.src = "Sand.png";
+
+// Set start position for grass and sand
+var posX = 0;
+var posY = 0;
 
 // Game objects
 var hero = {
@@ -73,19 +115,39 @@ var command = {
     image: new Image()
 };
 
-var initActionAndCommand = function () {
+// Create an object for the map grid
+var mapGrid = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+	rowSize: mapArray[0].length,
+	columnSize: mapArray.Length,
+    tileSize:,
+};
 
+var initActionAndCommand = function () {
+	// Set the width for the objects
     command.width = canvas.width;
     theAction.width = canvas.width;
+	mapGrid.Width = canvas.width;
 
+	// Set the start position for the objects
     theAction.x = 0;
     theAction.y = 0;
-    
-    command.height = 50; //The only value that should be messed with. This determines the height of the command line in pixels.
-    theAction.height = canvas.height - command.height;
-    command.x = 0;
-    command.y = theAction.height;
+	
+	mapGrid.x = 0;
+	mapGrid.y = 0;
+	
+	command.x = 0;
+	command.y = theAction.height;
 
+    // Set the height for the objects
+    theAction.height = canvas.height - command.height;
+	command.height = 50; //The only value that should be messed with. This determines the height of the command line in pixels.
+	mapGrid.height = canvas.height - command.height;
+
+	// Set the image for the objects
     theAction.image = theActionImage;
     command.image = commandImage;
 };
@@ -151,12 +213,58 @@ var update = function (modifier) {
 
 // Draw everything
 var render = function () {
+	// Draw action screen
 	if (theActionReady) {
 	    ctx.drawImage(theActionImage, theAction.x, theAction.y, theAction.width, theAction.height);
 	}
+
+	// Make sure that the grass and sand have been read in
+	if( blackBgTileReady && greenBgTileReady ) {
+		// Draw the array
+		for( var i = 0; i < mapArray.length; i++ ) {
+			for(var j = 0; j < mapArray[i].length; j++ ) {
+				// Draw grass image for elements in array that equal zero
+				if( mapArray[i][j] == 0 ) {
+					ctx.drawImage( blackBgTile, posX, posY, 32, 32 );
+				}
+				// Draw sand image for elements in array that equal one
+				if( mapArray[i][j] == 1 ) {
+					ctx.drawImage( greenBgTile, posX, posY, 32, 32 );
+				}
+
+				//Change the x-axis start position for the next tile
+				posX+=32;
+			}
+			// Reset the x-axis position back to 0 so that the rows transition properly
+			posX = 0;
+			
+			// Change the y-axis start position for the next tile row
+			posY+=32;
+		}
+	}
+
+/* 	// Draw rectangle
+	ctx.beginPath();
+	ctx.rect(0, 0, 100, 100);
+	ctx.fillStyle = 'yellow';
+	ctx.fill();
+	ctx.lineWidth = 7;
+	ctx.strokeStyle = 'red';
+	ctx.stroke(); */
+
+/* 	// Draw google image
+	if (googleReady) {
+	    ctx.drawImage(googleImage, 0, 0, 500, 500);
+	} */
+
+	// Draw command screen
 	if (commandReady) {
 	    ctx.drawImage(commandImage, command.x, command.y, command.width, command.height);
 	}
+	
+	// Reset position values
+	posX = 0;
+	posY = 0;
 };
 
 // The main game loop
