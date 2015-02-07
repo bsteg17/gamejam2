@@ -133,7 +133,7 @@ var mapGrid = {
     height: 0,
 	rowSize: mapArray[0].length,
 	columnSize: mapArray.Length,
-    tileSize:,
+    tileSize: 0
 };
 
 var commandLine = {
@@ -156,7 +156,7 @@ var cursor = {
 
 var initActionAndCommand = function () {
 	// Set the width for the objects
-    command.width = canvas.width;
+    commandBackground.width = canvas.width;
     theAction.width = canvas.width;
 	mapGrid.Width = canvas.width;
 
@@ -168,12 +168,12 @@ var initActionAndCommand = function () {
 	mapGrid.y = 0;
 	
 	commandBackground.x = 0;
-    commandBackground.y = theAction.height;
+    commandBackground.height = 50; //The only value that should be messed with. This determines the height of the commandBackground line in pixels..y = theAction.height;
 
     // Set the height for the objects
 	commandBackground.height = 50; //The only value that should be messed with. This determines the height of the commandBackground line in pixels.
     theAction.height = canvas.height - commandBackground.height;
-	mapGrid.height = canvas.height - command.height;
+	mapGrid.height = canvas.height - commandBackground.height;
 	
 	// Set the image for the objects
     theAction.image = theActionImage;
