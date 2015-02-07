@@ -83,7 +83,7 @@ var blackBgTile = new Image();
 blackBgTile.onload = function () {
     blackBgTileReady = true;
 };
-blackBgTile.src = "whiteBlock.png";
+blackBgTile.src = "Content/whiteBlock.png";
 
 // Sand image
 var greenBgTileReady = false;
@@ -91,7 +91,7 @@ var greenBgTile = new Image();
 greenBgTile.onload = function () {
     greenBgTileReady = true;
 };
-greenBgTile.src = "greenBlock.png";
+greenBgTile.src = "Content/greenBlock.png";
 
 // Set start position for grass and sand
 var posX = 0;
@@ -158,14 +158,10 @@ var initActionAndCommand = function () {
 	// Set the width for the objects
     commandBackground.width = canvas.width;
     theAction.width = canvas.width;
-	mapGrid.Width = canvas.width;
 
 	// Set the start position for the objects
     theAction.x = 0;
     theAction.y = 0;
-	
-	mapGrid.x = 0;
-	mapGrid.y = 0;
 	
 	commandBackground.x = 0;
     commandBackground.height = 50; //The only value that should be messed with. This determines the height of the commandBackground line in pixels..y = theAction.height;
@@ -173,24 +169,24 @@ var initActionAndCommand = function () {
     // Set the height for the objects
 	commandBackground.height = 50; //The only value that should be messed with. This determines the height of the commandBackground line in pixels.
     theAction.height = canvas.height - commandBackground.height;
-	mapGrid.height = canvas.height - commandBackground.height;
 	
-	// Set the image for the objects
+    // Set the image for the objects
+    commandBackground.y = theAction.height;
     theAction.image = theActionImage;
     commandBackground.image = commandBackgroundImage;
 };
 
 var initMapGrid = function () {
-	// Set the width for the objects
-	mapGrid.Width = canvas.width;
+    // Set the width for the objects
+    mapGrid.Width = canvas.width;
 
-	// Set the start position for the objects
-	mapGrid.x = 0;
-	mapGrid.y = 0;
+    // Set the start position for the objects
+    mapGrid.x = 0;
+    mapGrid.y = 0;
 
     // Set the height for the objects
-	mapGrid.height = canvas.height - commandBackground.height;
-}
+    mapGrid.height = canvas.height - commandBackground.height;
+};
 
 var initCommandLine = function () {
     commandLine.x = commandBackground.x + 10;
@@ -214,19 +210,7 @@ var initCursor = function () {
     cursor.blinking = true;
 };
 
-// Handle keyboard controls
-var keysDown = {};
 
-addEventListener("keydown", function (e) {
-	keysDown[e.keyCode] = true;
-}, false);
-
-addEventListener("keyup", function (e) {
-	delete keysDown[e.keyCode];
-}, false);
-
-// Handle keyboard controls
-var keysDown = {};
 
 addEventListener("keydown", function (e) {
     commandLine.keyPressed = e.keyCode;
@@ -347,9 +331,9 @@ var render = function () {
 	} */
 
 	// Draw command screen
-	if (commandBackgroundReady) {
-	    ctx.drawImage(commandBackgroundImage, commandBackground.x, commandBackground.y, commandBackground.width, commandBackground.height);
-	}
+	//if (commandBackgroundReady) {
+	//    ctx.drawImage(commandBackgroundImage, commandBackground.x, commandBackground.y, commandBackground.width, commandBackground.height);
+	//}
 	if (cursorReady && cursor.blinking) {
 	    ctx.drawImage(cursorImage, cursor.x, cursor.y, cursor.width, cursor.height);
 	}
