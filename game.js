@@ -37,13 +37,23 @@ theActionImage.onload = function () {
 };
 theActionImage.src = "Content/black.jpg";
 
-// Command line background image
-var commandReady = false;
-var commandImage = new Image();
-commandImage.onload = function () {
-    commandReady = true;
+// Background image
+var commandBackgroundReady = false;
+var commandBackgroundImage = new Image();
+commandBackgroundImage.onload = function () {
+    commandBackgroundReady = true;
 };
-commandImage.src = "Content/black.jpg";
+commandBackgroundImage.src = "Content/black.jpg";
+
+// Background image
+var cursorReady = false;
+var cursorImage = new Image();
+cursorImage.onload = function () {
+    cursorReady = true;
+};
+cursorImage.src = "Content/cursor.png";
+
+
 
 /* // Google image
 var googleReady = false;
@@ -107,7 +117,7 @@ var theAction = {
     image: new Image()
 };
 
-var command = {
+var commandBackground = {
     x: 0,
     y: 0,
     width: 0,
@@ -117,13 +127,31 @@ var command = {
 
 // Create an object for the map grid
 var mapGrid = {
-    x: 0,
+	x: 0,
     y: 0,
     width: 0,
     height: 0,
 	rowSize: mapArray[0].length,
 	columnSize: mapArray.Length,
     tileSize:,
+};
+
+var commandLine = {
+    charWidth: 5,
+    string: [],
+    keyPressed: null,
+    mayType: false
+};
+
+var cursor = {
+    x:0,
+    y: 0,
+    position: 0,
+    width:0,
+    height: 0,
+    blinkRate: 0,
+    lastBlink: 0,
+    blinking: false
 };
 
 var initActionAndCommand = function () {
@@ -139,17 +167,39 @@ var initActionAndCommand = function () {
 	mapGrid.x = 0;
 	mapGrid.y = 0;
 	
-	command.x = 0;
-	command.y = theAction.height;
+	commandBackground.x = 0;
+    commandBackground.y = theAction.height;
 
     // Set the height for the objects
-    theAction.height = canvas.height - command.height;
-	command.height = 50; //The only value that should be messed with. This determines the height of the command line in pixels.
+	commandBackground.height = 50; //The only value that should be messed with. This determines the height of the commandBackground line in pixels.
+    theAction.height = canvas.height - commandBackground.height;
 	mapGrid.height = canvas.height - command.height;
-
+	
 	// Set the image for the objects
     theAction.image = theActionImage;
-    command.image = commandImage;
+    commandBackground.image = commandBackgroundImage;
+};
+
+var initCommandLine = function () {
+    commandLine.x = commandBackground.x + 10;
+    commandLine.y = canvas.height - 20;
+    commandLine.width = canvas.width - 20;
+    commandLine.height = 10;
+    commandLine.charWidth = 5;
+    commandLine.string = [];
+    commandLine.keyPressed = null;
+    commandLine.mayType = true;
+};
+
+var initCursor = function () {
+    cursor.position = 0;
+    cursor.x = commandLine.x + (commandLine.charWidth * cursor.position);
+    cursor.y = commandLine.y;
+    cursor.width = commandLine.charWidth;
+    cursor.height = commandLine.height;
+    cursor.lastBlink = Date.now();
+    cursor.blinkRate = 300;
+    cursor.blinking = true;
 };
 
 // Handle keyboard controls
@@ -167,11 +217,13 @@ addEventListener("keyup", function (e) {
 var keysDown = {};
 
 addEventListener("keydown", function (e) {
-	keysDown[e.keyCode] = true;
+    commandLine.keyPressed = e.keyCode;
+    console.log(e.keyCode); //debug
 }, false);
 
 addEventListener("keyup", function (e) {
-	delete keysDown[e.keyCode];
+    commandLine.keyPressed = null;
+    commandLine.mayType = true;
 }, false);
 
 // Reset the game when the player catches a monster
@@ -184,31 +236,56 @@ var reset = function () {
 	monster.y = 32 + (Math.random() * (canvas.height - 64));
 };
 
+var updateCommandLine = function () {
+    //Update cursor position
+    cursor.x = commandLine.x + (commandLine.charWidth * cursor.position);
+
+    //Update cursor blinking on/off
+    if (Date.now() > (cursor.lastBlink + cursor.blinkRate)) {
+        cursor.blinking = !cursor.blinking;
+        cursor.lastBlink = Date.now();
+    }
+};
+
 // Update game objects
 var update = function (modifier) {
-	if (38 in keysDown) { // Player holding up
-		hero.y -= hero.speed * modifier;
-	}
-	if (40 in keysDown) { // Player holding down
-		hero.y += hero.speed * modifier;
-	}
-	if (37 in keysDown) { // Player holding left
-		hero.x -= hero.speed * modifier;
-	}
-	if (39 in keysDown) { // Player holding right
-		hero.x += hero.speed * modifier;
-	}
+	//if (38 in keysDown) { // Player holding up
+	//	hero.y -= hero.speed * modifier;
+	//}
+	//if (40 in keysDown) { // Player holding down
+	//	hero.y += hero.speed * modifier;
+	//}
+	//if (37 in keysDown) { // Player holding left
+	//	hero.x -= hero.speed * modifier;
+	//}
+	//if (39 in keysDown) { // Player holding right
+	//	hero.x += hero.speed * modifier;
+	//}
 
-	// Are they touching?
-	if (
-		hero.x <= (monster.x + 32)
-		&& monster.x <= (hero.x + 32)
-		&& hero.y <= (monster.y + 32)
-		&& monster.y <= (hero.y + 32)
-	) {
-		++monstersCaught;
-		reset();
-	}
+	//// Are they touching?
+	//if (
+	//	hero.x <= (monster.x + 32)
+	//	&& monster.x <= (hero.x + 32)
+	//	&& hero.y <= (monster.y + 32)
+	//	&& monster.y <= (hero.y + 32)
+	//) {
+	//	++monstersCaught;
+	//	reset();
+    //}
+
+    if (commandLine.mayType) {
+        switch (commandLine.keyPressed) {
+            case 69:
+                commandLine.string.push(' ');
+                cursor.position += 1;
+                break;
+            default:
+                console.log("WRONG KID DIED"); //debug
+        }
+        commandLine.mayType = false;
+    }
+
+    updateCommandLine();
 };
 
 // Draw everything
@@ -258,8 +335,11 @@ var render = function () {
 	} */
 
 	// Draw command screen
-	if (commandReady) {
-	    ctx.drawImage(commandImage, command.x, command.y, command.width, command.height);
+	if (commandBackgroundReady) {
+	    ctx.drawImage(commandBackgroundImage, commandBackground.x, commandBackground.y, commandBackground.width, commandBackground.height);
+	}
+	if (cursorReady && cursor.blinking) {
+	    ctx.drawImage(cursorImage, cursor.x, cursor.y, cursor.width, cursor.height);
 	}
 	
 	// Reset position values
@@ -288,6 +368,8 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 // Let's play this game!
 
 initActionAndCommand();
+initCommandLine();
+initCursor();
 var then = Date.now();
 reset();
 main();
