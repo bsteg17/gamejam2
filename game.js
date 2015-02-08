@@ -1,8 +1,12 @@
 // Constants
 var ROWS_OF_GROUND = 2; // The number of rows from the bottom of the array that are going to serve as the ground
 var showTheAction = false;
-var dialogue = JSON.parse(ZedDialogue);
-console.log(dialogue["questions"][0]["text"]);
+$.getJSON("ZedDialogue.json", function (data) {
+    console.log("JSON Data: " + data);
+    $.each(data, function (key, val) {
+        console.log(key + "value:: " + val);
+    });
+});
 
 // Create the canvas
 var canvas = document.createElement("canvas");
