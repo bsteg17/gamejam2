@@ -4,8 +4,8 @@ var ROWS_OF_GROUND = 2; // The number of rows from the bottom of the array that 
 // Create the canvas
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
-canvas.width = 500;
-canvas.height = 400;
+canvas.width = 1000;
+canvas.height = 800;
 document.body.appendChild(canvas);
 
 // Background image
@@ -47,6 +47,14 @@ commandBackgroundImage.onload = function () {
     commandBackgroundReady = true;
 };
 commandBackgroundImage.src = "Content/black.jpg";
+
+// Victory screen image
+var victoryScreenReady = false;
+var victoryScreenImage = new Image();
+victoryScreenImage.onload = function () {
+    victoryScreenReady = true;
+};
+victoryScreenImage.src = "Content/Gratulations3.png";
 
 // Background image
 var cursorReady = false;
@@ -99,8 +107,8 @@ var mapArray2 = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
 
 var mapArray3 = [
@@ -168,8 +176,8 @@ var mapArray5 = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+	[1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+	[1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
 
 var mapArray6 = [
@@ -214,8 +222,8 @@ var mapArray7 = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
 
 var mapArray8 = [
@@ -260,19 +268,19 @@ var mapArray9 = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+	[1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+	[1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
 
 var mapArray10 = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -402,7 +410,8 @@ var mapGrid = {
     rowSize: mapArrays[0][0].length, // Number of elements in each row ( number of columns )
     columnSize: mapArrays[0].length, // Number of elements in each column ( number of rows )
     tileHeight: 0,
-    tileWidth: 0
+    tileWidth: 0,
+    endScreenImage: new Image()
 };
 
 var commandLine = {
@@ -499,6 +508,9 @@ var initMapGrid = function () {
 
     // Set the current map array value
     mapGrid.currentArray = 0;
+
+    // Set the end screen image
+    mapGrid.endScreenImage = victoryScreenImage;
 };
 
 var initCommandLine = function () {
@@ -762,7 +774,7 @@ var sendResponse = function (str) {
 // Update game objects
 var update = function (modifier) {
     // When the player gets to the edge of the screen...
-	if ((hero.headPosX >= mapGrid.width) && (mapGrid.currentArray < 10)) {
+	if (hero.headPosX >= mapGrid.width) {
 	    // Change the screen to the next map grid
 	    mapGrid.currentArray += 1
 
@@ -821,99 +833,108 @@ var update = function (modifier) {
 
 // Draw everything
 var render = function () {
-    // Make sure that the background tiles have been read in
-    if( blackBgTileReady && greenBgTileReady ) {
-        // Draw the array
-        for (var i = 0; i < mapArrays[mapGrid.currentArray].length; i++) {
-            for (var j = 0; j < mapArrays[mapGrid.currentArray][i].length; j++) {
-                // Draw black tiles
-                if (mapArrays[mapGrid.currentArray][i][j] == 0) {
-                    ctx.drawImage( blackBgTile, posX, posY, mapGrid.tileWidth, mapGrid.tileHeight );
-                }
-                // Draw green tiles
-                if (mapArrays[mapGrid.currentArray][i][j] == 1) {
-                    ctx.drawImage( greenBgTile, posX, posY, mapGrid.tileWidth, mapGrid.tileHeight );
-                }
 
-                //Change the x-axis start position for the next tile
-                posX += mapGrid.tileWidth;
+    // Determine whether to display a map or the victory screen
+    if (mapGrid.currentArray <= 9) {
+        // Make sure that the background tiles have been read in
+        if (blackBgTileReady && greenBgTileReady) {
+            // Draw the array
+            for (var i = 0; i < mapArrays[mapGrid.currentArray].length; i++) {
+                for (var j = 0; j < mapArrays[mapGrid.currentArray][i].length; j++) {
+                    // Draw black tiles
+                    if (mapArrays[mapGrid.currentArray][i][j] == 0) {
+                        ctx.drawImage(blackBgTile, posX, posY, mapGrid.tileWidth, mapGrid.tileHeight);
+                    }
+                    // Draw green tiles
+                    if (mapArrays[mapGrid.currentArray][i][j] == 1) {
+                        ctx.drawImage(greenBgTile, posX, posY, mapGrid.tileWidth, mapGrid.tileHeight);
+                    }
+
+                    //Change the x-axis start position for the next tile
+                    posX += mapGrid.tileWidth;
+                }
+                // Reset the x-axis position back to 0 so that the rows transition properly
+                posX = 0;
+
+                // Change the y-axis start position for the next tile row
+                posY += mapGrid.tileHeight;
             }
-            // Reset the x-axis position back to 0 so that the rows transition properly
-            posX = 0;
-			
-            // Change the y-axis start position for the next tile row
-            posY += mapGrid.tileHeight;
         }
-    }
-	
-    // Create a circle for the character's head
-    ctx.beginPath();
-    ctx.arc(hero.headPosX, hero.headPosY, hero.headSize, 0, 2*Math.PI);
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = 'chartreuse';
-    ctx.stroke();
-	
-    // Create a line for the character's torso
-    ctx.moveTo(hero.head2TorsoPosX, hero.head2TorsoY);
-    ctx.lineTo(hero.torso2UpperLegPosX, hero.torso2UpperLegPosY);
-    ctx.stroke();
-	
-    //// ARM #1 ////
-	
-    // Create a line for the character's first upper arm
-    ctx.moveTo(hero.torso2UpperArmPosX, hero.torso2UpperArmPosY);
-    ctx.lineTo(hero.upper2LowerArmPosX1, hero.upper2LowerArmPosY1);
-    ctx.stroke();
-	
-    //// ARM #2 ////
-	
-    // Create a line for the character's second arm
-    ctx.moveTo(hero.torso2UpperArmPosX, hero.torso2UpperArmPosY);
-    ctx.lineTo(hero.upper2LowerArmPosX2, hero.upper2LowerArmPosY2);
-    ctx.stroke();
-	
-    //// LEG #1 ////
-	
-    // Create a line for the character's second arm
-    ctx.moveTo(hero.torso2UpperLegPosX, hero.torso2UpperLegPosY);
-    ctx.lineTo(hero.upper2LowerLegPosX1, hero.upper2LowerLegPosY1);
-    ctx.stroke();
-	
-    //// LEG #2 ////
-	
-    // Create a line for the character's second arm
-    ctx.moveTo(hero.torso2UpperLegPosX, hero.torso2UpperLegPosY);
-    ctx.lineTo(hero.upper2LowerLegPosX2, hero.upper2LowerLegPosY2);
-    ctx.stroke();
-	
 
-	// Draw command screen
-	if (commandBackgroundReady) {
-	    ctx.drawImage(commandBackgroundImage, commandBackground.x, commandBackground.y, commandBackground.width, commandBackground.height);
-	};
-	if (commandLine.string.length > 0) {
-	    for (i = 0; i < commandLine.string.length; i++) {
-	        if (commandLine.string[i] != " ") {
-	            ctx.drawImage(chars[commandLine.string[i]], commandLine.x + (cursor.width * i), cursor.y, cursor.width, cursor.height);
-	        }
-	    }
-	}
-	for (i = 0; i < zedLines.lines.length; i++) {
-	    if (zedLines.lines[i].string.length > 0) {
-	        for (j = 0; j < zedLines.lines[i].string.length; j++) {
-	            if (zedLines.lines[i].string[j] != " ") {
-	                ctx.drawImage(chars[zedLines.lines[i].string[j].toUpperCase()], zedLines.lines[i].x + (cursor.width * j), zedLines.lines[i].y, cursor.width, cursor.height);
-	            }
-	        }
-	    }
-	}
-	if (cursorReady && cursor.blinking) {
-	    ctx.drawImage(cursorImage, cursor.x, cursor.y, cursor.width, cursor.height);
-	};
-	
-	// Reset position values
-	posX = 0;
-	posY = 0;
+        // Create a circle for the character's head
+        ctx.beginPath();
+        ctx.arc(hero.headPosX, hero.headPosY, hero.headSize, 0, 2 * Math.PI);
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = 'chartreuse';
+        ctx.stroke();
+
+        // Create a line for the character's torso
+        ctx.moveTo(hero.head2TorsoPosX, hero.head2TorsoY);
+        ctx.lineTo(hero.torso2UpperLegPosX, hero.torso2UpperLegPosY);
+        ctx.stroke();
+
+        //// ARM #1 ////
+
+        // Create a line for the character's first upper arm
+        ctx.moveTo(hero.torso2UpperArmPosX, hero.torso2UpperArmPosY);
+        ctx.lineTo(hero.upper2LowerArmPosX1, hero.upper2LowerArmPosY1);
+        ctx.stroke();
+
+        //// ARM #2 ////
+
+        // Create a line for the character's second arm
+        ctx.moveTo(hero.torso2UpperArmPosX, hero.torso2UpperArmPosY);
+        ctx.lineTo(hero.upper2LowerArmPosX2, hero.upper2LowerArmPosY2);
+        ctx.stroke();
+
+        //// LEG #1 ////
+
+        // Create a line for the character's second arm
+        ctx.moveTo(hero.torso2UpperLegPosX, hero.torso2UpperLegPosY);
+        ctx.lineTo(hero.upper2LowerLegPosX1, hero.upper2LowerLegPosY1);
+        ctx.stroke();
+
+        //// LEG #2 ////
+
+        // Create a line for the character's second arm
+        ctx.moveTo(hero.torso2UpperLegPosX, hero.torso2UpperLegPosY);
+        ctx.lineTo(hero.upper2LowerLegPosX2, hero.upper2LowerLegPosY2);
+        ctx.stroke();
+
+
+        // Draw command screen
+        if (commandBackgroundReady) {
+            ctx.drawImage(commandBackgroundImage, commandBackground.x, commandBackground.y, commandBackground.width, commandBackground.height);
+        };
+        if (commandLine.string.length > 0) {
+            for (i = 0; i < commandLine.string.length; i++) {
+                if (commandLine.string[i] != " ") {
+                    ctx.drawImage(chars[commandLine.string[i]], commandLine.x + (cursor.width * i), cursor.y, cursor.width, cursor.height);
+                }
+            }
+        }
+        for (i = 0; i < zedLines.lines.length; i++) {
+            if (zedLines.lines[i].string.length > 0) {
+                for (j = 0; j < zedLines.lines[i].string.length; j++) {
+                    if (zedLines.lines[i].string[j] != " ") {
+                        ctx.drawImage(chars[zedLines.lines[i].string[j].toUpperCase()], zedLines.lines[i].x + (cursor.width * j), zedLines.lines[i].y, cursor.width, cursor.height);
+                    }
+                }
+            }
+        }
+        if (cursorReady && cursor.blinking) {
+            ctx.drawImage(cursorImage, cursor.x, cursor.y, cursor.width, cursor.height);
+        };
+
+        // Reset position values
+        posX = 0;
+        posY = 0;
+    } else {
+        // Print the victory screen image
+        if (victoryScreenReady) {
+            ctx.drawImage(mapGrid.endScreenImage, mapGrid.x, mapGrid.y, mapGrid.width, mapGrid.height);
+        };
+    }
 };
 
 // The main game loop
