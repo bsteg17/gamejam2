@@ -227,9 +227,20 @@ var zed = {
     futureQuestionResponses: []
 };
 
+var zedLines = {
+    width: 0,
+    height: 0,
+    charWidth: 0,
+    maxChars: 0,
+    lines: [],
+    then: 0,
+    wait: 0
+};
+
+
 var createGround = function(){
 	// Change the bottom x lines of the mapGrid to ground values
-	for(i = mapArray.length - 1; i > ( mapArray.length - ( ROWS_OF_GROUND + 1 ) ); i--) {
+	for (i = mapArray.length - 1; i > ( mapArray.length - ( ROWS_OF_GROUND + 1 ) ); i--) {
 		for(var j = 0; j < mapGrid.rowSize; j++){
 			// Change the value to indicate it as a ground value
 			mapArray[i][j] = 1;
@@ -243,7 +254,7 @@ var initActionAndCommand = function () {
     theAction.width = canvas.width;
 
     // Set the height for the objects
-	commandBackground.height = 50; //The only value that should be messed with. This determines the height of the commandBackground line in pixels.
+	commandBackground.height = 120; //The only value that should be messed with. This determines the height of the commandBackground line in pixels.
     theAction.height = canvas.height - commandBackground.height;
 
     //Set position of theAction
@@ -286,6 +297,23 @@ var initCommandLine = function () {
     commandLine.maxChars = 30;
     commandLine.keyPressed = null;
     commandLine.mayType = true;
+};
+
+var justZedThings = ["Hello", "I am Zed"];
+
+var initZedLines = function () {
+    zedLines.questionNumber = 0;
+    zedLines.width = commandLine.width;
+    zedLines.height = commandLine.height;
+    zedLines.charWidth = commandLine.charWidth;
+    zedLines.maxChars = commandLine.maxChars;
+    zedLines.lines = [{
+        x: commandLine.x,
+        y: commandLine.y - 20,
+        string: []
+    }];
+    zedLines.then = Date.now();
+    zedLines.wait = 2000;
 };
 
 var initCursor = function () {
@@ -379,6 +407,15 @@ var updateCommandLine = function () {
     if (Date.now() > (cursor.lastBlink + cursor.blinkRate)) {
         cursor.blinking = !cursor.blinking;
         cursor.lastBlink = Date.now();
+    }
+};
+
+var updateZedLines = function () {
+    var now = Date.now();
+    if (now > zedLines.then + zedLines.wait) {
+        if (justZedThings.length > 0) {
+            zedLines.lines[0].string = justZedThings[0].split(''); //debug
+        }
     }
 };
 
@@ -505,6 +542,12 @@ var update = function (modifier) {
                 cursor.position += 1;
             }
             pressed = true;
+        } else if (commandLine.keyPressed == 32) {
+            if (cursor.position <= commandLine.maxChars) {
+                commandLine.string.push(String.fromCharCode(commandLine.keyPressed));
+                cursor.position += 1;
+            }
+            pressed = true;
         } else if (commandLine.keyPressed == 13) {
             commandLine.string = [];
             cursor.position = 0;
@@ -520,6 +563,7 @@ var update = function (modifier) {
     }
 
     updateCommandLine();
+    updateZedLines();
 };
 
 // Draw everything
@@ -596,7 +640,21 @@ var render = function () {
 	};
 	if (commandLine.string.length > 0) {
 	    for (i = 0; i < commandLine.string.length; i++) {
-	        ctx.drawImage(chars[commandLine.string[i]], commandLine.x + (cursor.width * i), cursor.y, cursor.width, cursor.height);
+	        if (commandLine.string[i] != " ") {
+	            ctx.drawImage(chars[commandLine.string[i]], commandLine.x + (cursor.width * i), cursor.y, cursor.width, cursor.height);
+	        }
+	    }
+	}
+	console.log(zedLines.lines.length);
+	for (i = 0; i < zedLines.lines.length; i++) {
+	    console.log(zedLines.lines[i]);
+	    if (zedLines.lines[i].string.length > 0) {
+	        for (j = 0; j < zedLines.lines[i].string.length; j++) {
+	            if (zedLines.lines[i].string[j] != " ") {
+	                console.log(zedLines.lines[i].string[j]);
+	                ctx.drawImage(chars[zedLines.lines[i].string[j].toUpperCase()], zedLines.lines[i].x + (cursor.width * j), zedLines.lines[i].y, cursor.width, cursor.height);
+	            }
+	        }
 	    }
 	}
 	if (cursorReady && cursor.blinking) {
@@ -632,6 +690,7 @@ createGround();
 initActionAndCommand();
 initMapGrid();
 initCommandLine();
+initZedLines();
 initCursor();
 initCharacterPosition();
 jump();
