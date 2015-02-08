@@ -386,10 +386,22 @@ var sendResponse = function () {
 
 };
 
-//// Make the character jump
-//var jump = function () {
-//
-//};
+// Make the character jump
+var jump = function () {
+    // Maximum height
+    maximumJumpHeight = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND) - 150;
+
+    // Determine the y-values of the jump
+    jumpStage1 = maximumJumpHeight / 4;
+    jumpStage2 = maximumJumpHeight / 2;
+    jumpStage3 = (3 * maximumJumpHeight) / 4;
+    jumpStage4 = maximumJumpHeight;
+    jumpStage5 = (5 * maximumJumpHeight) / 4;
+    jumpStage6 = 3 * maximumJumpHeight;
+    jumpStage7 = (7 * maximumJumpHeight) / 4;
+    jumpStage8 = 2 * maximumJumpHeight;
+
+};
 
 // Update the body parts based on the x-position of the head
 var updateBodyPartsPosition = function(headPosX) {
@@ -622,5 +634,6 @@ initMapGrid();
 initCommandLine();
 initCursor();
 initCharacterPosition();
+jump();
 var then = Date.now();
 main();
