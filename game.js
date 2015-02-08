@@ -299,7 +299,7 @@ var initCommandLine = function () {
     commandLine.mayType = true;
 };
 
-var justZedThings = ["Hello", "I am Zed"];
+var justZedThings = ["This is water", "This is water", "This is water"];
 
 var initZedLines = function () {
     zedLines.questionNumber = 0;
@@ -310,6 +310,16 @@ var initZedLines = function () {
     zedLines.lines = [{
         x: commandLine.x,
         y: commandLine.y - 20,
+        string: []
+    },
+    {
+        x: commandLine.x,
+        y: commandLine.y - 32,
+        string: []
+    },
+    {
+        x: commandLine.x,
+        y: commandLine.y - 44,
         string: []
     }];
     zedLines.then = Date.now();
@@ -410,12 +420,19 @@ var updateCommandLine = function () {
     }
 };
 
+var zedLineIndex = 0;
+
 var updateZedLines = function () {
     var now = Date.now();
     if (now > zedLines.then + zedLines.wait) {
         if (justZedThings.length > 0) {
-            zedLines.lines[0].string = justZedThings[0].split(''); //debug
+            zedLines.lines[zedLineIndex].string = justZedThings.pop().split(''); //debug
+
+            if (zedLineIndex < zedLines.lines.length - 1) {
+                zedLineIndex += 1;
+            }
         }
+        zedLines.then = Date.now();
     }
 };
 
