@@ -96,15 +96,15 @@ greenBgTile.onload = function () {
 };
 greenBgTile.src = "Content/greenBlock.png";
 
-var alphanumeric = [];
+/* var alphanumeric = [];
 for (i = 48; i < 91; i++) {
     if (i < 58 || i > 64) {
         alphanumeric.push(String.fromCharCode(i));
     }
     console.log(alphanumeric[i]); //debug
-}
+} */
 
-//Character images
+/* //Character images
 var charReady = [];
 for (i = 0; i < 37; i++) {
     charReady.push(false);
@@ -116,9 +116,7 @@ for (i = 0; i < 37; i++) {
         charReady = true;
     };
     charImages[i].src = "Content/Alphanumeric/" + alphanumeric[i] + ".png";
-}
-  
-greenBgTile.src = "Content/greenBlock.png";
+} */
 
 // Set start position for grass and sand
 var posX = 0;
@@ -128,7 +126,38 @@ var posY = 0;
 var hero = {
 	speed: 256, // movement in pixels per second
 	x: 0,
-	y: 0
+	y: 0,
+	armPosition: 1,
+	legPosition: 1,
+	headPosX: 0,
+	headPosY: 0,
+	headSize: 0,
+	head2TorsoPosX: 0,
+	head2TorsoY: 0,
+	torso2UpperArmPosX1: 0,
+	torso2UpperArmPosY1: 0,
+	torso2UpperArmPosX2: 0,
+	torso2UpperArmPosY2: 0,
+	upper2LowerArmPosX1: 0,
+	upper2LowerArmPosY1: 0,
+	upper2LowerArmPosX2: 0,
+	upper2LowerArmPosY2: 0,
+	lowerArm2AirPosX1: 0,
+	lowerArm2AirPosY1: 0,
+	lowerArm2AirPosX2: 0,
+	lowerArm2AirPosY2: 0,
+	torso2UpperLegPosX1: 0,
+	torso2UpperLegPosY1: 0,
+	torso2UpperLegPosX2: 0,
+	torso2UpperLegPosY2: 0,
+	upper2LowerLegPosX1: 0,
+	upper2LowerLegPosY1: 0,
+	upper2LowerLegPosX2: 0,
+	upper2LowerLegPosY2: 0,
+	lowerLeg2GroundPosX1: 0,
+	lowerLeg2GroundPosY1: 0,
+	lowerLeg2GroundPosX2: 0,
+	lowerLeg2GroundPosY2: 0
 };
 var monster = {
 	x: 0,
@@ -183,22 +212,12 @@ var cursor = {
 };
 
 var createGround = function(){
-	console.log( mapArray.length );
-
 	// Change the bottom x lines of the mapGrid to ground values
 	for(i = mapArray.length - 1; i > ( mapArray.length - ( ROWS_OF_GROUND + 1 ) ); i--) {
-		console.log(i);
-	
 		for(var j = 0; j < mapGrid.rowSize; j++){
-			console.log(j);
-		
-			console.log(mapArray[i][j]);
-		
+			// Change the value to indicate it as a ground value
 			mapArray[i][j] = 1;
-			
-			console.log(mapArray[i][j]);
 		}
-		//mapArray[i] = 1;
 	}
 };
 
@@ -264,8 +283,55 @@ var initCursor = function () {
     cursor.blinking = true;
 };
 
-var getCharacterPosition = function() {
-	// Determine
+var initCharacterPosition = function() {
+	//// HEAD ////
+	
+	// Determine the head size
+	hero.headSize = 15;
+
+	// Determine the position of the circle for the character's head at the start of the level
+	hero.headPosY = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND) - 90;
+	hero.headPosX = theAction.x + hero.headSize + 5 // Set this so that the hero starts 5 units from the left edge of the screen
+	
+	//// TORSO ////
+	
+	// Determine the position of where the hero's head attaches to the torso
+	hero.head2TorsoPosX = hero.headPosX + Math.sqrt( hero.headSize );
+	hero.head2TorsoY = hero.headPosY + hero.headSize;
+	
+	// Determine the position of where the torso attaches to the upper arm
+	hero.torso2UpperArmPosX = hero.head2TorsoPosX;
+	hero.torso2UpperArmPosY = hero.head2TorsoY + 12;
+	
+	// Determine the position of where the torso attaches to the upper leg
+	hero.torso2UpperLegPosX = hero.head2TorsoPosX;
+	hero.torso2UpperLegPosY = hero.head2TorsoY + 40;
+	
+	//// ARM #1 ////
+	
+	// Determine the joint between the upper and lower arm of the hero's lower arm #1
+	hero.upper2LowerArmPosX1 = hero.torso2UpperArmPosX + 20;
+	hero.upper2LowerArmPosY1 = hero.torso2UpperArmPosY + 25;
+	
+	//// ARM #2 ////
+	
+	// Determine the joint between the upper and lower arm of the hero's lower arm #2
+	hero.upper2LowerArmPosX2 = hero.torso2UpperArmPosX - 20;
+	hero.upper2LowerArmPosY2 = hero.torso2UpperArmPosY + 25;
+	
+	//// LEG #1 ////
+	
+	// Determine the position of the hero's upper leg #1
+	hero.upper2LowerLegPosX1 = hero.torso2UpperLegPosX + 13;
+	hero.upper2LowerLegPosY1 = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND);
+	//hero.upper2LowerLegPosY1 = ( theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND) ) - hero.torso2UpperLegPosY;
+	
+	//// LEG #2 ////
+	
+	// Determine the position of the hero's upper leg #2
+	hero.upper2LowerLegPosX2 = hero.torso2UpperLegPosX - 13;
+	hero.upper2LowerLegPosY2 = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND);
+	//hero.upper2LowerLegPosY2 = ( theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND) ) - hero.torso2UpperLegPosY;
 };
 
 addEventListener("keyup", function (e) {
@@ -303,8 +369,91 @@ var sendResponse = function () {
 
 };
 
+// Update the body parts based on the x-position of the head
+var updateBodyPartsPosition = function(headPosX) {
+	// Determine the position of the hero's torso
+	hero.head2TorsoPosX = headPosX + Math.sqrt( hero.headSize );
+	hero.head2TorsoY = hero.headPosY + hero.headSize;
+	
+	// Determine the position of the joint that connects the legs to the torso
+	hero.torso2UpperLegPosX = hero.head2TorsoPosX;
+	hero.torso2UpperLegPosY = hero.head2TorsoY + 40;
+	
+	// Determine the position of where the torso attaches to the upper arm
+	hero.torso2UpperArmPosX = hero.head2TorsoPosX;
+	hero.torso2UpperArmPosY = hero.head2TorsoY + 12;
+	
+	// Determine the current position of the character's arms
+	if(hero.armPosition == 0) {
+		// Determine the position variance from the torso of arm #1
+		armPositionVariance1 = -20
+		// Determine the position variance from the torso of arm #2
+		armPositionVariance2 = 20
+		
+		// Update the arm position value
+		hero.armPosition = hero.armPosition + 1;
+	} else if (hero.armPosition == 1) {
+		// Determine the position variance from the torso of arm #1
+		armPositionVariance1 = 0
+		// Determine the position variance from the torso of arm #2
+		armPositionVariance2 = 0
+
+		// Update the arm position value
+		hero.armPosition = hero.armPosition - 1;
+	} else {
+		// Output error message
+		console.log( "error" );
+	}
+	
+	// Determine the joint between the upper and lower arm of the hero's lower arm #1
+	hero.upper2LowerArmPosX1 = hero.torso2UpperArmPosX + armPositionVariance1;
+	hero.upper2LowerArmPosY1 = hero.torso2UpperArmPosY + 25;
+	
+	// Determine the joint between the upper and lower arm of the hero's lower arm #2
+	hero.upper2LowerArmPosX2 = hero.torso2UpperArmPosX + armPositionVariance2;
+	hero.upper2LowerArmPosY2 = hero.torso2UpperArmPosY + 25;
+	
+	if(hero.legPosition == 0) {
+		// Determine the position variance from the torso of arm #1
+		legPositionVariance1 = -13
+		// Determine the position variance from the torso of arm #2
+		legPositionVariance2 = 13
+		
+		// Update the arm position value
+		hero.legPosition = hero.legPosition + 1;
+	} else if (hero.legPosition == 1) {
+		// Determine the position variance from the torso of arm #1
+		legPositionVariance1 = 0
+		// Determine the position variance from the torso of arm #2
+		legPositionVariance2 = 0
+		
+		// Update the arm position value
+		hero.legPosition = hero.legPosition - 1;
+	} else {
+		// Output error message
+		console.log( "error" );
+	}
+	
+	// Determine the position of the hero's upper leg #1
+	hero.upper2LowerLegPosX1 = hero.torso2UpperLegPosX + legPositionVariance1;
+	hero.upper2LowerLegPosY1 = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND);
+
+	// Determine the position of the hero's upper leg #2
+	hero.upper2LowerLegPosX2 = hero.torso2UpperLegPosX + legPositionVariance2;
+	hero.upper2LowerLegPosY2 = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND);
+};
+
 // Update game objects
 var update = function (modifier) {
+	
+	// Update the hero's head x position
+	hero.headPosX += hero.speed * modifier;
+	
+	// Update all the other body parts based on the new head position
+	updateBodyPartsPosition(hero.headPosX)
+	
+	
+	
 	//if (38 in keysDown) { // Player holding up
 	//	hero.y -= hero.speed * modifier;
 	//}
@@ -383,12 +532,46 @@ var render = function () {
 	
 	// Create a circle for the character's head
 	ctx.beginPath();
-	ctx.arc(100,200,15,0,2*Math.PI);
-	ctx.lineWidth = 5;
-	ctx.strokeStyle = 'yellow';
+	ctx.arc(hero.headPosX, hero.headPosY, hero.headSize, 0, 2*Math.PI);
+	ctx.lineWidth = 3;
+	ctx.strokeStyle = 'chartreuse';
 	ctx.stroke();
+	
+	// Create a line for the character's torso
+	ctx.moveTo(hero.head2TorsoPosX, hero.head2TorsoY);
+	ctx.lineTo(hero.torso2UpperLegPosX, hero.torso2UpperLegPosY);
+	ctx.stroke();
+	
+	//// ARM #1 ////
+	
+	// Create a line for the character's first upper arm
+	ctx.moveTo(hero.torso2UpperArmPosX, hero.torso2UpperArmPosY);
+	ctx.lineTo(hero.upper2LowerArmPosX1, hero.upper2LowerArmPosY1);
+	ctx.stroke();
+	
+  	//// ARM #2 ////
+	
+	// Create a line for the character's second arm
+	ctx.moveTo(hero.torso2UpperArmPosX, hero.torso2UpperArmPosY);
+	ctx.lineTo(hero.upper2LowerArmPosX2, hero.upper2LowerArmPosY2);
+	ctx.stroke();
+	
+	//// LEG #1 ////
+	
+	// Create a line for the character's second arm
+	ctx.moveTo(hero.torso2UpperLegPosX, hero.torso2UpperLegPosY);
+	ctx.lineTo(hero.upper2LowerLegPosX1, hero.upper2LowerLegPosY1);
+	ctx.stroke();
+	
+	//// LEG #2 ////
+	
+	// Create a line for the character's second arm
+	ctx.moveTo(hero.torso2UpperLegPosX, hero.torso2UpperLegPosY);
+	ctx.lineTo(hero.upper2LowerLegPosX2, hero.upper2LowerLegPosY2);
+	ctx.stroke();
+	
 
-	// Draw command screen
+	/* // Draw command screen
 	if (commandBackgroundReady) {
 	    ctx.drawImage(commandBackgroundImage, commandBackground.x, commandBackground.y, commandBackground.width, commandBackground.height);
 	};
@@ -399,7 +582,7 @@ var render = function () {
 	}
 	if (cursorReady && cursor.blinking) {
 	    ctx.drawImage(cursorImage, cursor.x, cursor.y, cursor.width, cursor.height);
-	};
+	}; */
 	
 	// Reset position values
 	posX = 0;
@@ -411,7 +594,7 @@ var main = function () {
 	var now = Date.now();
 	var delta = now - then;
 
-	update(delta / 1000);
+	update(delta / 10000);
 	render();
 
 	then = now;
@@ -431,7 +614,7 @@ initActionAndCommand();
 initMapGrid();
 initCommandLine();
 initCursor();
-//createCharacter();
+initCharacterPosition();
 var then = Date.now();
 reset();
 main();
