@@ -349,6 +349,7 @@ var hero = {
 	y: 0,
 	armPosition: 1,
 	legPosition: 1,
+    //Everything relative to:
 	headPosX: 0,
 	headPosY: 0,
 	headSize: 0,
@@ -456,17 +457,6 @@ var zedLines = {
     then: 0,
     wait: 0
 };
-
-
-//var createGround = function(){
-//	// Change the bottom x lines of the mapGrid to ground values
-//	for (i = mapArray.length - 1; i > ( mapArray.length - ( ROWS_OF_GROUND + 1 ) ); i--) {
-//		for(var j = 0; j < mapGrid.rowSize; j++){
-//			// Change the value to indicate it as a ground value
-//			mapArray[i][j] = 1;
-//		}
-//	}
-//};
 
 var initActionAndCommand = function () {
 	// Set the width for the objects
@@ -589,7 +579,8 @@ var initCharacterPosition = function() {
 	// Determine the head size
 	hero.headSize = 15;
 
-	// Determine the position of the circle for the character's head at the start of the level
+    // Determine the position of the circle for the character's head at the start of the level
+    //Everything relative to:
 	hero.headPosY = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND) - 90;
 	hero.headPosX = theAction.x + hero.headSize + 5 // Set this so that the hero starts 5 units from the left edge of the screen
 	
@@ -798,6 +789,13 @@ var sendResponse = function (str) {
     adjustZedLines(str);
 };
 
+var currentQuestion = 0;
+var zedSpeaks = function () {
+    str = dialogue["Questions"][currentQuestion]["text"];
+    adjustZedLines(str);
+}
+
+var temp = true; //debug
 // Update game objects
 var update = function (modifier) {
     // When the player gets to the edge of the screen...
@@ -853,6 +851,11 @@ var update = function (modifier) {
 
     if (pressed) {
         commandLine.mayType = false;
+    }
+
+    if (temp) {
+        zedSpeaks();
+        temp = false;
     }
 
     updateCommandLine();
