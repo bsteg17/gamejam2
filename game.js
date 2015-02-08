@@ -637,39 +637,44 @@ addEventListener("keyup", function (e) {
     
 }, false);
 
+var mayRespond = false;
+
 addEventListener("keydown", function (e) {
+    if (mayRespond) {
         commandLine.keyPressed = e.keyCode;
-            if (commandLine.keyPressed == 8) {
-                if (cursor.position > 0) {
-                    commandLine.string.pop();
-                    cursor.position -= 1;
-                }
-                pressed = true;
-            } else if (commandLine.keyPressed >= 48 && commandLine.keyPressed < 91) {
-                if (cursor.position <= commandLine.maxChars) {
-                    commandLine.string.push(String.fromCharCode(commandLine.keyPressed));
-                    cursor.position += 1;
-                }
-                pressed = true;
-            } else if (commandLine.keyPressed == 32) {
-                if (cursor.position <= commandLine.maxChars) {
-                    commandLine.string.push(String.fromCharCode(commandLine.keyPressed));
-                    cursor.position += 1;
-                }
-                pressed = true;
-            } else if (commandLine.keyPressed == 13) {
-                var str = "";
-                for (j = 0; j < commandLine.string.length; j++) {
-                    str = str.concat(commandLine.string[j]);
-                }
-                console.log(str);
-                commandLine.string = [];
-                cursor.position = 0;
-                sendResponse(str);
-                pressed = true;
-            } else {
-                console.log("WRONG KID DIED"); //debug
+        if (commandLine.keyPressed == 8) {
+            if (cursor.position > 0) {
+                commandLine.string.pop();
+                cursor.position -= 1;
             }
+            pressed = true;
+        } else if (commandLine.keyPressed >= 48 && commandLine.keyPressed < 91) {
+            if (cursor.position <= commandLine.maxChars) {
+                commandLine.string.push(String.fromCharCode(commandLine.keyPressed));
+                cursor.position += 1;
+            }
+            pressed = true;
+        } else if (commandLine.keyPressed == 32) {
+            if (cursor.position <= commandLine.maxChars) {
+                commandLine.string.push(String.fromCharCode(commandLine.keyPressed));
+                cursor.position += 1;
+            }
+            pressed = true;
+        } else if (commandLine.keyPressed == 13) {
+            var str = "";
+            for (j = 0; j < commandLine.string.length; j++) {
+                str = str.concat(commandLine.string[j]);
+            }
+            console.log(str);
+            commandLine.string = [];
+            cursor.position = 0;
+            sendResponse(str);
+            pressed = true;
+            mayRespond = false;
+        } else {
+            console.log("WRONG KID DIED"); //debug
+        }
+    }
 }, false);
 
 var updateCommandLine = function () {
@@ -687,7 +692,7 @@ var adjustZedLines = function (str) {
     for (j = zedLines.lines.length - 1; j > 0; j--) {
         zedLines.lines[j].string = zedLines.lines[j - 1].string;
     }
-    zedLines.lines[0].string = str.split(''); //debug
+    zedLines.lines[0].string = str.split('');
 };
 
 // Make the character jump
@@ -791,73 +796,33 @@ var sendResponse = function (str) {
 
 var currentQuestion = 0;
 var zedSpeaks = function () {
-    str = dialogue["Questions"][currentQuestion]["text"];
-    adjustZedLines(str);
+    adjustZedLines("Jump?");
+    mayRespond = true;
 }
 
-var temp = true; //debug
 // Update game objects
+var temp = true;
 var update = function (modifier) {
     // When the player gets to the edge of the screen...
-	if (hero.headPosX >= mapGrid.width) {
-	    // Change the screen to the next map grid
-	    mapGrid.currentArray += 1
+    if (hero.headPosX >= mapGrid.width) {
+        // Change the screen to the next map grid
+        mapGrid.currentArray += 1
 
-	    // Reset the character to the beginning of the next screen
-	    initCharacterPosition();
-	} else {
-	    // Update the hero's head x position
-	    hero.headPosX += hero.speed * modifier;
+        // Reset the character to the beginning of the next screen
+        initCharacterPosition();
+    } else {
+        // Update the hero's head x position
+        hero.headPosX += hero.speed * modifier;
 
-	    // Update all the other body parts based on the new head position
-	    updateBodyPartsPosition(hero.headPosX);
-	}
-	
-    var pressed = false;
-
-    if (commandLine.mayType) {
-        if (commandLine.keyPressed == 8) {
-            if (cursor.position > 0) {
-                commandLine.string.pop();
-                cursor.position -= 1;
-            }
-            pressed = true;
-        } else if (commandLine.keyPressed >= 48 && commandLine.keyPressed < 91) {
-            if (cursor.position <= commandLine.maxChars) {
-                commandLine.string.push(String.fromCharCode(commandLine.keyPressed));
-                cursor.position += 1;
-            }
-            pressed = true;
-        } else if (commandLine.keyPressed == 32) {
-            if (cursor.position <= commandLine.maxChars) {
-                commandLine.string.push(String.fromCharCode(commandLine.keyPressed));
-                cursor.position += 1;
-            }
-            pressed = true;
-        } else if (commandLine.keyPressed == 13) {
-            var str = "";
-            for (j = 0; j < commandLine.string.length; j++) {
-                str = str.concat(commandLine.string[j]);
-            }
-            console.log(str);
-            commandLine.string = [];
-            cursor.position = 0;
-            sendResponse(str);
-            pressed = true;
-        } else {
-            console.log("WRONG KID DIED"); //debug
-        }
-    }
-
-    if (pressed) {
-        commandLine.mayType = false;
+        // Update all the other body parts based on the new head position
+        updateBodyPartsPosition(hero.headPosX);
     }
 
     if (temp) {
         zedSpeaks();
-        temp = false;
+        console.log("Thus spaketh Zedesthra");
     }
-
+    temp = false;
     updateCommandLine();
 };
 
@@ -946,8 +911,37 @@ var render = function () {
         for (i = 0; i < zedLines.lines.length; i++) {
             if (zedLines.lines[i].string.length > 0) {
                 for (j = 0; j < zedLines.lines[i].string.length; j++) {
-                    if (zedLines.lines[i].string[j] != " ") {
-                        ctx.drawImage(chars[zedLines.lines[i].string[j].toUpperCase()], zedLines.lines[i].x + (cursor.width * j), zedLines.lines[i].y, cursor.width, cursor.height);
+                    var character = zedLines.lines[i].string[j];
+                    if (character != " ") {
+                        switch (character) {
+                            case '?':
+                                character = 'QuestionMark';
+                                break;
+                            case '!':
+                                character = 'ExclamationMark';
+                                break;
+                            case '.':
+                                character = 'period';
+                                break;
+                            case '(':
+                                character = 'LeftParenth';
+                                break;
+                            case ')':
+                                character = 'RightParenth';
+                                break;
+                            case '/':
+                                character = 'Slash';
+                                break;
+                            case '\'':
+                                character = 'Apostrophe'
+                                break;
+                            default:
+                                character = character.toUpperCase();
+                                break;
+                        }
+                        console.log(character); //debug
+                        ctx.drawImage(chars[character], zedLines.lines[i].x + (cursor.width * j), zedLines.lines[i].y, cursor.width, cursor.height);
+                    }
                     }
                 }
             }
@@ -955,16 +949,7 @@ var render = function () {
         if (cursorReady && cursor.blinking) {
             ctx.drawImage(cursorImage, cursor.x, cursor.y, cursor.width, cursor.height);
         };
-
-        // Reset position values
-        posX = 0;
-        posY = 0;
-    } else {
-        // Print the victory screen image
-        if (victoryScreenReady) {
-            ctx.drawImage(mapGrid.endScreenImage, mapGrid.x, mapGrid.y, mapGrid.width, mapGrid.height);
-        };
-    }
+    
 };
 
 // The main game loop
@@ -994,6 +979,5 @@ initCommandLine();
 initZedLines();
 initCursor();
 initCharacterPosition();
-jump();
 var then = Date.now();
 main();
