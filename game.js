@@ -1,5 +1,8 @@
 // Constants
-ROWS_OF_GROUND = 2; // The number of rows from the bottom of the array that are going to serve as the ground
+var ROWS_OF_GROUND = 2; // The number of rows from the bottom of the array that are going to serve as the ground
+var showTheAction = false;
+var dialogue = JSON.parse(ZedDialogue);
+console.log(dialogue["questions"][0]["text"]);
 
 // Create the canvas
 var canvas = document.createElement("canvas");
@@ -59,12 +62,12 @@ cursorImage.src = "Content/cursor.png";
 // Create the array for the virtual world part of the screen
 var mapArray = [
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 	[0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 	[0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -299,7 +302,7 @@ var initCommandLine = function () {
     commandLine.mayType = true;
 };
 
-var justZedThings = ["This is water", "This is water", "This is water"];
+var justZedThings = ["A","B","C","D","E","F","G"];
 
 var initZedLines = function () {
     zedLines.questionNumber = 0;
@@ -320,6 +323,26 @@ var initZedLines = function () {
     {
         x: commandLine.x,
         y: commandLine.y - 44,
+        string: []
+    },
+    {
+        x: commandLine.x,
+        y: commandLine.y - 56,
+        string: []
+    },
+    {
+        x: commandLine.x,
+        y: commandLine.y - 68,
+        string: []
+    },
+    {
+        x: commandLine.x,
+        y: commandLine.y - 80,
+        string: []
+    },
+    {
+        x: commandLine.x,
+        y: commandLine.y - 92,
         string: []
     }];
     zedLines.then = Date.now();
@@ -403,7 +426,6 @@ addEventListener("keyup", function (e) {
 
 addEventListener("keydown", function (e) {
     if (commandLine.mayType == true) {
-        console.log("keychange");
         commandLine.keyPressed = e.keyCode;
         commandLine.mayType = true;
     }
@@ -420,24 +442,11 @@ var updateCommandLine = function () {
     }
 };
 
-var zedLineIndex = 0;
-
-var updateZedLines = function () {
-    var now = Date.now();
-    if (now > zedLines.then + zedLines.wait) {
-        if (justZedThings.length > 0) {
-            zedLines.lines[zedLineIndex].string = justZedThings.pop().split(''); //debug
-
-            if (zedLineIndex < zedLines.lines.length - 1) {
-                zedLineIndex += 1;
-            }
-        }
-        zedLines.then = Date.now();
+var adjustZedLines = function (str) {
+    for (j = zedLines.lines.length - 1; j > 0; j--) {
+        zedLines.lines[j].string = zedLines.lines[j - 1].string;
     }
-};
-
-var sendResponse = function () {
-
+    zedLines.lines[0].string = str.split(''); //debug
 };
 
 // Make the character jump
@@ -535,6 +544,10 @@ var updateBodyPartsPosition = function(headPosX) {
 	}
 };
 
+var sendResponse = function (str) {
+    adjustZedLines(str);
+};
+
 // Update game objects
 var update = function (modifier) {
 
@@ -566,9 +579,14 @@ var update = function (modifier) {
             }
             pressed = true;
         } else if (commandLine.keyPressed == 13) {
+            var str = "";
+            for (j = 0; j < commandLine.string.length; j++) {
+                str = str.concat(commandLine.string[j]);
+            }
+            console.log(str);
             commandLine.string = [];
             cursor.position = 0;
-            sendResponse();
+            sendResponse(str);
             pressed = true;
         } else {
             console.log("WRONG KID DIED"); //debug
@@ -580,75 +598,76 @@ var update = function (modifier) {
     }
 
     updateCommandLine();
-    updateZedLines();
 };
 
 // Draw everything
 var render = function () {
-	// Make sure that the grass and sand have been read in
+    if (showTheAction) {
+        // Make sure that the grass and sand have been read in
 	if( blackBgTileReady && greenBgTileReady ) {
-		// Draw the array
-		for( var i = 0; i < mapArray.length; i++ ) {
-			for(var j = 0; j < mapArray[i].length; j++ ) {
-				// Draw grass image for elements in array that equal zero
-				if( mapArray[i][j] == 0 ) {
-					ctx.drawImage( blackBgTile, posX, posY, mapGrid.tileWidth, mapGrid.tileHeight );
-				}
-				// Draw sand image for elements in array that equal one
-				if( mapArray[i][j] == 1 ) {
-					ctx.drawImage( greenBgTile, posX, posY, mapGrid.tileWidth, mapGrid.tileHeight );
-				}
+        // Draw the array
+        for( var i = 0; i < mapArray.length; i++ ) {
+            for(var j = 0; j < mapArray[i].length; j++ ) {
+                // Draw grass image for elements in array that equal zero
+                if( mapArray[i][j] == 0 ) {
+                    ctx.drawImage( blackBgTile, posX, posY, mapGrid.tileWidth, mapGrid.tileHeight );
+                }
+                // Draw sand image for elements in array that equal one
+                if( mapArray[i][j] == 1 ) {
+                    ctx.drawImage( greenBgTile, posX, posY, mapGrid.tileWidth, mapGrid.tileHeight );
+                }
 
-				//Change the x-axis start position for the next tile
-				posX += mapGrid.tileWidth;
-			}
-			// Reset the x-axis position back to 0 so that the rows transition properly
-			posX = 0;
+                //Change the x-axis start position for the next tile
+                posX += mapGrid.tileWidth;
+            }
+            // Reset the x-axis position back to 0 so that the rows transition properly
+            posX = 0;
 			
-			// Change the y-axis start position for the next tile row
-			posY += mapGrid.tileHeight;
-		}
-	}
+            // Change the y-axis start position for the next tile row
+            posY += mapGrid.tileHeight;
+        }
+    }
 	
-	// Create a circle for the character's head
-	ctx.beginPath();
-	ctx.arc(hero.headPosX, hero.headPosY, hero.headSize, 0, 2*Math.PI);
-	ctx.lineWidth = 3;
-	ctx.strokeStyle = 'chartreuse';
-	ctx.stroke();
+    // Create a circle for the character's head
+    ctx.beginPath();
+    ctx.arc(hero.headPosX, hero.headPosY, hero.headSize, 0, 2*Math.PI);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = 'chartreuse';
+    ctx.stroke();
 	
-	// Create a line for the character's torso
-	ctx.moveTo(hero.head2TorsoPosX, hero.head2TorsoY);
-	ctx.lineTo(hero.torso2UpperLegPosX, hero.torso2UpperLegPosY);
-	ctx.stroke();
+    // Create a line for the character's torso
+    ctx.moveTo(hero.head2TorsoPosX, hero.head2TorsoY);
+    ctx.lineTo(hero.torso2UpperLegPosX, hero.torso2UpperLegPosY);
+    ctx.stroke();
 	
-	//// ARM #1 ////
+    //// ARM #1 ////
 	
-	// Create a line for the character's first upper arm
-	ctx.moveTo(hero.torso2UpperArmPosX, hero.torso2UpperArmPosY);
-	ctx.lineTo(hero.upper2LowerArmPosX1, hero.upper2LowerArmPosY1);
-	ctx.stroke();
+    // Create a line for the character's first upper arm
+    ctx.moveTo(hero.torso2UpperArmPosX, hero.torso2UpperArmPosY);
+    ctx.lineTo(hero.upper2LowerArmPosX1, hero.upper2LowerArmPosY1);
+    ctx.stroke();
 	
-  	//// ARM #2 ////
+    //// ARM #2 ////
 	
-	// Create a line for the character's second arm
-	ctx.moveTo(hero.torso2UpperArmPosX, hero.torso2UpperArmPosY);
-	ctx.lineTo(hero.upper2LowerArmPosX2, hero.upper2LowerArmPosY2);
-	ctx.stroke();
+    // Create a line for the character's second arm
+    ctx.moveTo(hero.torso2UpperArmPosX, hero.torso2UpperArmPosY);
+    ctx.lineTo(hero.upper2LowerArmPosX2, hero.upper2LowerArmPosY2);
+    ctx.stroke();
 	
-	//// LEG #1 ////
+    //// LEG #1 ////
 	
-	// Create a line for the character's second arm
-	ctx.moveTo(hero.torso2UpperLegPosX, hero.torso2UpperLegPosY);
-	ctx.lineTo(hero.upper2LowerLegPosX1, hero.upper2LowerLegPosY1);
-	ctx.stroke();
+    // Create a line for the character's second arm
+    ctx.moveTo(hero.torso2UpperLegPosX, hero.torso2UpperLegPosY);
+    ctx.lineTo(hero.upper2LowerLegPosX1, hero.upper2LowerLegPosY1);
+    ctx.stroke();
 	
-	//// LEG #2 ////
+    //// LEG #2 ////
 	
-	// Create a line for the character's second arm
-	ctx.moveTo(hero.torso2UpperLegPosX, hero.torso2UpperLegPosY);
-	ctx.lineTo(hero.upper2LowerLegPosX2, hero.upper2LowerLegPosY2);
-	ctx.stroke();
+    // Create a line for the character's second arm
+    ctx.moveTo(hero.torso2UpperLegPosX, hero.torso2UpperLegPosY);
+    ctx.lineTo(hero.upper2LowerLegPosX2, hero.upper2LowerLegPosY2);
+    ctx.stroke();
+}
 	
 
 	// Draw command screen
@@ -662,13 +681,10 @@ var render = function () {
 	        }
 	    }
 	}
-	console.log(zedLines.lines.length);
 	for (i = 0; i < zedLines.lines.length; i++) {
-	    console.log(zedLines.lines[i]);
 	    if (zedLines.lines[i].string.length > 0) {
 	        for (j = 0; j < zedLines.lines[i].string.length; j++) {
 	            if (zedLines.lines[i].string[j] != " ") {
-	                console.log(zedLines.lines[i].string[j]);
 	                ctx.drawImage(chars[zedLines.lines[i].string[j].toUpperCase()], zedLines.lines[i].x + (cursor.width * j), zedLines.lines[i].y, cursor.width, cursor.height);
 	            }
 	        }
