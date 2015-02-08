@@ -345,7 +345,8 @@ var posY = 0;
 
 // Game objects
 var hero = {
-	xSpeed: 100, // movement in pixels per second
+    xSpeed: 100, // movement in pixels per second in the x direction
+    ySpeed: 100, // movement in pixels per second in the y direction
 	x: 0,
 	y: 0,
 	armPosition: 1,
@@ -584,7 +585,7 @@ var initCharacterPosition = function() {
     // Determine the position of the circle for the character's head at the start of the level
     //Everything relative to:
 	hero.headPosY = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND) - 90;
-	hero.headPosX = theAction.x + hero.headSize + 5 // Set this so that the hero starts 5 units from the left edge of the screen
+	hero.headPosX = theAction.x + hero.headSize + 5; // Set this so that the hero starts 5 units from the left edge of the screen
 	
 	//// TORSO ////
 	
@@ -617,14 +618,14 @@ var initCharacterPosition = function() {
 	// Determine the position of the hero's upper leg #1
 	hero.upper2LowerLegPosX1 = hero.torso2UpperLegPosX + 13;
 	hero.upper2LowerLegPosY1 = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND);
-	//hero.upper2LowerLegPosY1 = ( theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND) ) - hero.torso2UpperLegPosY;
 	
 	//// LEG #2 ////
 	
 	// Determine the position of the hero's upper leg #2
 	hero.upper2LowerLegPosX2 = hero.torso2UpperLegPosX - 13;
 	hero.upper2LowerLegPosY2 = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND);
-	//hero.upper2LowerLegPosY2 = ( theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND) ) - hero.torso2UpperLegPosY;
+
+
 	hero.startingAnimationTime = Date.now();
 	hero.animationxSpeed = 300;
 	
@@ -667,7 +668,6 @@ addEventListener("keydown", function (e) {
             for (j = 0; j < commandLine.string.length; j++) {
                 str = str.concat(commandLine.string[j]);
             }
-            console.log(str);
             commandLine.string = [];
             cursor.position = 0;
             sendResponse(str);
@@ -699,59 +699,59 @@ var adjustZedLines = function (str) {
 
 // Update the y-value of the character to simulate jumping
 // NOTE: the x-value will be updated by the same code that causes the constant velocity of character's normal movement
-var jump = function () {
-    // Initialize variables
-    var now = Date.now();
-    var moved = false;
-    var currentPosYVariance = 1;
+//var jump = function () {
+//     Initialize variables
+//    var now = Date.now();
+//    var moved = false;
+//    var currentPosYVariance = 1;
 
-    // Maximum height
-    MAX_JUMP_HEIGHT = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND) - 150;
+//     Maximum height
+//    MAX_JUMP_HEIGHT = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND) - 150;
 
-    if (now > hero.startingAnimationTime + hero.animationSpeed) {
-        // Current y-position variance
-        if (hero.head2TorsoY == (theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND))) {
-            currentPosYVariance = 1;
-        } else if (hero.head2TorsoY == MAX_JUMP_HEIGHT) {
-            currentPosYVariance = -1;
-        }
+//    if (now > hero.startingAnimationTime + hero.animationSpeed) {
+//         Current y-position variance
+//        if (hero.head2TorsoY == (theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND))) {
+//            currentPosYVariance = 1;
+//        } else if (hero.head2TorsoY == MAX_JUMP_HEIGHT) {
+//            currentPosYVariance = -1;
+//        }
 
-        // Indicate that the start animation time should be updated
-        moved = true;
-    }
+//         Indicate that the start animation time should be updated
+//        moved = true;
+//    }
 
-    // Determine the position of the circle for the character's head at the start of the level
-    hero.headPosY = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND) - 90;
+//     Determine the position of the circle for the character's head at the start of the level
+//    hero.headPosY = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND) - 90;
     
-    // Change the y-position  of the character's head
-    hero.head2TorsoY = hero.head2TorsoY + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
+//     Change the y-position  of the character's head
+//    hero.head2TorsoY = hero.head2TorsoY + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
 
-    // Determine the position of the hero's torso
-    hero.head2TorsoY = hero.headPosY + hero.headSize + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
+//     Determine the position of the hero's torso
+//    hero.head2TorsoY = hero.headPosY + hero.headSize + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
 
-    // Determine the position of the joint that connects the legs to the torso
-    hero.torso2UpperLegPosY = hero.head2TorsoY + 40 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
+//     Determine the position of the joint that connects the legs to the torso
+//    hero.torso2UpperLegPosY = hero.head2TorsoY + 40 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
 
-    // Determine the position of where the torso attaches to the upper arm
-    hero.torso2UpperArmPosY = hero.head2TorsoY + 12 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
+//     Determine the position of where the torso attaches to the upper arm
+//    hero.torso2UpperArmPosY = hero.head2TorsoY + 12 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
 
-    // Determine the joint between the upper and lower arm of the hero's lower arm #1
-    hero.upper2LowerArmPosY1 = hero.torso2UpperArmPosY + 25 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
+//     Determine the joint between the upper and lower arm of the hero's lower arm #1
+//    hero.upper2LowerArmPosY1 = hero.torso2UpperArmPosY + 25 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
 
-    // Determine the joint between the upper and lower arm of the hero's lower arm #2
-    hero.upper2LowerArmPosY2 = hero.torso2UpperArmPosY + 25 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
+//     Determine the joint between the upper and lower arm of the hero's lower arm #2
+//    hero.upper2LowerArmPosY2 = hero.torso2UpperArmPosY + 25 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
 
-    // Determine the position of the hero's upper leg #1
-    hero.upper2LowerLegPosY1 = hero.torso2UpperLegPosY + 35 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
+//     Determine the position of the hero's upper leg #1
+//    hero.upper2LowerLegPosY1 = hero.torso2UpperLegPosY + 35 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
 
-    // Determine the position of the hero's upper leg #2
-    hero.upper2LowerLegPosY2 = hero.torso2UpperLegPosY + 35 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
+//     Determine the position of the hero's upper leg #2
+//    hero.upper2LowerLegPosY2 = hero.torso2UpperLegPosY + 35 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
 
-    // Update the start animation time if indicated to do so
-    if (moved) {
-        hero.startingAnimationTime = Date.now();
-    }
-};
+//     Update the start animation time if indicated to do so
+//    if (moved) {
+//        hero.startingAnimationTime = Date.now();
+//    }
+//};
 
 // Update the body parts based on the x-position of the head
 var updateBodyPartsPosition = function(headPosX) {
@@ -759,22 +759,22 @@ var updateBodyPartsPosition = function(headPosX) {
 	var now = Date.now();
 	var moved = false;
 
-	var currentPosYVariance = 1;
+	//var currentPosYVariance = 1;
 
-    // Maximum height
-	MAX_JUMP_HEIGHT = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND) - 150;
-
-	if (now > hero.startingAnimationTime + hero.animationSpeed) {
-	    // Current y-position variance
-	    if (hero.head2TorsoY == (theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND))) {
-	        currentPosYVariance = 1;
-	    } else if (hero.head2TorsoY == MAX_JUMP_HEIGHT) {
-	        currentPosYVariance = -1;
-	    }
-
-	    // Indicate that the start animation time should be updated
-	    moved = true;
-	}	
+    //// Maximum height
+	//MAX_JUMP_HEIGHT = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND) - 150;
+    //
+	//if (now > hero.startingAnimationTime + hero.animationSpeed) {
+	//    // Current y-position variance
+	//    if (hero.head2TorsoY == (theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND))) {
+	//        currentPosYVariance = 1;
+	//    } else if (hero.head2TorsoY == MAX_JUMP_HEIGHT) {
+	//        currentPosYVariance = -1;
+	//    }
+    //
+	//    // Indicate that the start animation time should be updated
+	//    moved = true;
+	//}	
 
 	// Determine the position of the hero's torso
 	hero.head2TorsoPosX = headPosX + Math.sqrt( hero.headSize );
@@ -842,29 +842,29 @@ var updateBodyPartsPosition = function(headPosX) {
 	hero.upper2LowerLegPosX2 = hero.torso2UpperLegPosX + hero.legPositionVariance2;
 	hero.upper2LowerLegPosY2 = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND);
 
-    //Jump
-	if (hero.jumpingUpdate) {
-	    // Determine the position of the hero's torso
-	    hero.head2TorsoPosY = hero.head2TorsoPosY + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
-
-	    // Determine the position of the joint that connects the legs to the torso
-	    hero.torso2UpperLegPosY = hero.torso2UpperLegPosY + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
-
-	    // Determine the position of where the torso attaches to the upper arm
-	    hero.torso2UpperArmPosY = hero.torso2UpperArmPosY + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
-
-	    // Determine the joint between the upper and lower arm of the hero's lower arm #1
-	    hero.upper2LowerArmPosY1 = hero.upper2LowerArmPosY1 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
-
-	    // Determine the joint between the upper and lower arm of the hero's lower arm #2
-	    hero.upper2LowerArmPosY2 = hero.upper2LowerArmPosY2 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
-
-	    // Determine the position of the hero's upper leg #1
-	    hero.upper2LowerLegPosY1 = hero.upper2LowerLegPosY1 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
-
-	    // Determine the position of the hero's upper leg #2
-	    hero.upper2LowerLegPosY2 = hero.upper2LowerLegPosY2 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
-	}
+    ////Jump
+	//if (hero.jumpingUpdate) {
+	//    // Determine the position of the hero's torso
+	//    hero.head2TorsoPosY = hero.head2TorsoPosY + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
+    //
+	//    // Determine the position of the joint that connects the legs to the torso
+	//    hero.torso2UpperLegPosY = hero.torso2UpperLegPosY + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
+    //
+	//    // Determine the position of where the torso attaches to the upper arm
+	//    hero.torso2UpperArmPosY = hero.torso2UpperArmPosY + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
+    //
+	//    // Determine the joint between the upper and lower arm of the hero's lower arm #1
+	//    hero.upper2LowerArmPosY1 = hero.upper2LowerArmPosY1 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
+    //
+	//    // Determine the joint between the upper and lower arm of the hero's lower arm #2
+	//    hero.upper2LowerArmPosY2 = hero.upper2LowerArmPosY2 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
+    //
+	//    // Determine the position of the hero's upper leg #1
+	//    hero.upper2LowerLegPosY1 = hero.upper2LowerLegPosY1 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
+    //
+	//    // Determine the position of the hero's upper leg #2
+	//    hero.upper2LowerLegPosY2 = hero.upper2LowerLegPosY2 + ((MAX_JUMP_HEIGHT * currentPosYVariance) / 4);
+	//}
 	
     // Update the start animation time if indicated to do so
 	if (moved) {
@@ -886,7 +886,6 @@ var zedSpeaks = function () {
 var temp = true;
 var update = function (modifier) {
     // When the player gets to the edge of the screen...
-
 	if (hero.headPosX >= mapGrid.width) {
 	    // Change the screen to the next map grid
 	    mapGrid.currentArray += 1
@@ -895,21 +894,20 @@ var update = function (modifier) {
 	    initCharacterPosition();
 	} else {
 	    // Update the hero's head x position
-	    hero.headPosX += hero.speed * modifier;
+	    hero.headPosX += hero.xSpeed * modifier;
 
 	    // Update all the other body parts based on the new head position
 	    updateBodyPartsPosition(hero.headPosX);
 
-	    if (hero.jumpingUpdate) {
-	        jump();
-	    }
+	    //if (hero.jumpingUpdate) {
+	    //    jump();
+	    //}
 	}
 	
     var pressed = false;
 
     if (temp) {
         zedSpeaks();
-        console.log("Thus spaketh Zedesthra");
     }
     temp = false;
     updateCommandLine();
@@ -1028,16 +1026,26 @@ var render = function () {
                                 character = character.toUpperCase();
                                 break;
                         }
-                        console.log(character); //debug
                         ctx.drawImage(chars[character], zedLines.lines[i].x + (cursor.width * j), zedLines.lines[i].y, cursor.width, cursor.height);
-                    }
                     }
                 }
             }
         }
+
         if (cursorReady && cursor.blinking) {
             ctx.drawImage(cursorImage, cursor.x, cursor.y, cursor.width, cursor.height);
         };
+
+        // Reset position values
+        posX = 0;
+        posY = 0;
+    } else {
+        // Print the victory screen image
+        if (victoryScreenReady) {
+            ctx.drawImage(mapGrid.endScreenImage, mapGrid.x, mapGrid.y, mapGrid.width, mapGrid.height);
+        };
+    }
+    
     
 };
 
