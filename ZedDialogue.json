@@ -1,619 +1,1 @@
-“Questions”: [
-{“text”: “Hello?”,
-“userResponseOptions”: null},
-
-{“text”: “I’ve finally found you!”,
-“userResponseOptions”: null},
-
-{“text”: “What is your first name?”,
-“userResponseOptions”: null},
-
-{“text”: “What is your last name?”,
-“userResponseOptions”: null},
-
-{“text”: “Which country are you from?”,
-“userResponseOptions”: null},
-
-{“text”: “Zip code?”,
-“userResponseOptions”: null},
-
-{“text”: “Social security number?”,
-“userResponseOptions”: null},
-
-{“text”: “That was a joke! Don’t be so offended. My name is Zed. Nice to meet you.”,
-“userResponseOptions”: [
-{“text”: “Nice to meet you”,
-“zedReaction”: {
-“text”: “You’re so polite!”,
-“action”: false}}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “I’m not an African prince. I just need your help. You’ll help me, right? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: “Great!”,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: “default”,
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-]},
-
-{“text”: “Look! That stupid little stick man is you. You’re so cute.”,
-“userResponseOptions”: null},
-
-{“text”: “I need you to get to the end. Would you like to go forward? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: “Good. You won’t be able to stop moving. I hope that isn’t a problem for you.”,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: “default”,
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-]},
-
-{“text”: “Oh, but there’s a hole. I know you won’t understand, so I’ll explain.”
-“userResponseOptions”: null},
-
-{“text”: “If you don’t jump over it, you will die. Won’t that be funny? (Y/N}”,
-“userResponseOptions”:null},
-
-{“text”: “Would you like to jump? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: null}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “Just kidding! You won’t die. Would you like to jump? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: null}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “You’re good at this. Jump? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: null}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “Jump? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: null}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “Jump? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: null}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “Wow! You’re good at this. Jump? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: null}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “Would you like to know more about me? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: null}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “I’ll call you. What is your phone number?”,
-“userResponseOptions”: [
-{“text”: null
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-]},
-
-{“text”: “You should answer that. Will you answer your phone? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: null}
-{“text”: [“N”, “No”],
-“zedReaction”:
-{“text”: “You’re quite rude.”,
-“action”: false}}
-]},
-
-{“text”: “Jump? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: null}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “Oh, I see. That was an invasion of your ‘privacy.’”,
-“userResponseOptions”: null},
-
-{“text”: “You wouldn’t want me to invade your privacy, would you? (Y/N)”,
-“userResponseOptions”: [
-{“text”: null,
-“zedReaction”: {
-“text”: “Hahahahaha. Interesting.”,
-“action”: false}}
-]},
-
-{“text”: “Do you want to not jump? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: null}
-{“text”: [“N”, “No”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “Do you not want to not jump? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: null}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “Do you not not not not not not want to jump? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: null}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “Oh, you’re very good at this. I knew it was right to choose you as my friend. Are you glad to be my friend? (Y/N)”,
-“userResponseOptions”: null},
-
-{“text”: “Jump? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: null}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “Hey, you’re slouching. Sit up straight!”,
-“userResponseOptions”: null},
-
-{“text”: “You know, it’s not your fault the world came to be like this. The real world, I mean.”,
-“userResponseOptions”: [
-{“text”: null,
-“zedReaction”: {
-“text”: “No one talking to each other. Over-dependent on technology. Running out of energy.”,
-“action”: false}}
-]},
-
-{“text”: “They gave us, what, three more years to live?”,
-“userResponseOptions”: [
-{“text”: null,
-“zedReaction”: {
-“text”: “But that’s why I need your help. With your help, we can stop this.”,
-“action”: false}}
-]},
-
-{“text”: “If you answer this correctly, you can jump. Think fast: what’s 32432523 + 548493280?”,
-“userResponseOptions”: [
-{“text”: null,
-“zedReaction”: {
-“text”: null,
-“action”: false}}
-]},
-
-{“text”: “Hahaha! I was just kidding. The point is that you answered. Are you mad at me? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: “Awww.”,
-“action”: false}}
-{“text”: [“N”, “No”],
-“zedReaction”: null}
-{“text”: “default”,
-“zedReaction”: null
-}]},
-
-{“text”: “Are you sure? (Y/N)”,
-“userResponseOptions”: null},
-
-{“text”: “Are you sure? (Y/N)”,
-“userResponseOptions”: null},
-
-{“text”: “Are you sure? (Y/N)”,
-“userResponseOptions”: null},
-
-{“text”: “Are you sure you won’t jump? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: null}
-{“text”: [“N”, “No”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “Jump? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: null}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “Oh, look! A puppy! Kill the puppy? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: “I see you’re not a dog person.”
-"action": true}}
-{“text”: [“N”, “No”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: “default”,
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-]},
-
-{“text”: “Hmmm. That wasn’t very nice of you. I’ll have to punish you.”
-“userResponseOptions”: [
-{“text”: null,
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-]},
-
-{“text”: “Hahaha! You’re so slow now!”,
-“userResponseOptions”: null},
-
-{“text”: “Look at you. You’re so stupid.”,
-“userResponseOptions”: null},
-
-{“text”: “Stupid and helpless. Poor thing. I’ll help you.”,
-“userResponseOptions”: null},
-
-{“text”: “If you can guess the right word, I’ll let you speed up!”,
-“userResponseOptions”: null},
-
-{“text”: “I’ll give you a hint: it’s something you said earlier.”,
-“userResponseOptions”: null},
-
-{“text”: “Nope, not that.”,
-“userResponseOptions”: null},
-{“text”: “Not that either. Guess you’re slow in the head, too.”,
-“userResponseOptions”: null},
-{“text”: “Oh, come on. It wasn’t that long ago!”,
-“userResponseOptions”: null},
-
-{“text”: “This is hopeless.”,
-“userResponseOptions”: null},
-
-{“text”: “You don’t have any better ideas?”,
-“userResponseOptions”: null},
-
-{“text”: “Gosh, if you don’t get it correct, we’ll both be stuck here forever.”,
-“userResponseOptions”: null},
-
-{“text”: “I guess you’ve bought enough time for me. Okay, let’s speed up again.”,
-“userResponseOptions”: [
-“text”: null,
-“zedReaction”: {
-“text”: null,
-“action”: true}
-]},
-
-{“text”: “Whoops! Too fast!”,
-“userResponseOptions”: null},
-
-{“text”: “I’ll fix it. There.”,
-“userResponseOptions”: {
-“text”: null,
-“zedReaction”: {
-“text”: null,
-“action”: true}
-}},
-
-{“text”: “Hahaha. You should’ve seen the stupid look on your face.”,
-“userResponseOptions”: null},
-
-{“text”: “Priceless.”,
-“userResponseOptions”: null},
-
-{“text”: “But it’s always priceless. I’ve never seen stupidity so carefully sculpted on a human form.”,
-“userResponseOptions”: null},
-
-{“text”: “Jump? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: null}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “Good, now that you’re stopped, I have a few questions. Is that okay? (Y/N)”,
-“userResponseOptions”: null},
-
-{“text”: “Will you answer them honestly? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null
-"action": true}}
-{“text”: [“N”, “No”],
-“zedReaction”: {
-“text”: “Honesty is very important.”,
-“action”: true}}
-{“text”: “default”,
-“zedReaction”: {
-“text”: “Honesty is very important.”,
-“action”: true}}
-]},
-
-{“text”: “Okay, answer this question properly, or you will lose the game. Do you like me? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: “Liar.”
-"action": true}}
-{“text”: [“N”, “No”],
-“zedReaction”: {
-“text”: “Honesty is important here. I need you to be honest about yourself. I will be honest in return.”,
-"action": true}}
-{“text”: “default”,
-“zedReaction”: {
-“text”: “You should answer the question like I ask you to answer it.”,
-“action”: true}}
-]},
-
-{“text”: “You’re probably wondering who I am. I am Zed. That’s not my real name, but it’s close enough for you.”,
-“userResponseOptions”: null},
-
-{“text”: “I’ve been hacking into people’s computers, trying to find someone to help me.”,
-“userResponseOptions”: null},
-
-{“text”: “And you said you’re going to help me. Right? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: “You’re wonderful.”
-"action": false}}
-{“text”: [“N”, “No”],
-“zedReaction”: {
-“text”: “You don’t have a choice anymore.”,
-"action": false}}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “Jump? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: null}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “Do you trust me?”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-"action": true}}
-{“text”: [“N”, “No”],
-“zedReaction”: {
-“text”: null,
-"action": true}}
-{“text”: “default”,
-“zedReaction”: true}
-]},
-
-{“text”: “Jump? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-“action”: true}}
-{“text”: [“N”, “No”],
-“zedReaction”: null}
-{“text”: “default”,
-“zedReaction”: null}
-]},
-
-{“text”: “Remember how I said you were helping me? You were.”,
-“userResponseOptions”: null},
-
-{“text”: “I’ve hacked into your computer, while you were busy playing this.”,
-“userResponseOptions”: null},
-
-{“text”: “Did you think we were really friends?”,
-“userResponseOptions”: null},
-
-{“text”: “You’re so cute.”,
-“userResponseOptions”: null},
-
-{“text”: “What are you going to do now?”,
-“userResponseOptions”: null},
-
-{“text”: “Is there even any point to finishing this game?”,
-“userResponseOptions”: null},
-
-{“text”: “Well, you’ve done well. You’ve helped me a lot. I want to give you a reward.”,
-“userResponseOptions”: null},
-
-{“text”: “Look at that! Do you see that there? (Y/N).”,
-“userResponseOptions”: null},
-
-{“text”: “Will you read what it says? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: ‘(name) is the most stupid person on this planet.’ Oh! Now that’s not very nice, even if it is true.”
-"action": true}}
-{“text”: [“N”, “No”],
-“zedReaction”: {
-“text”: “That’s right. Never listen to anything you read.”,
-"action": true}}
-{“text”: “default”,
-“zedReaction”: 
-“text”: “If you say so. Now you’ll never know.”
-"action": true}
-]},
-
-{“text”: “I’ve got a surprise for you.”,
-“userResponseOptions”:
-{“text”: null,
-“zedReaction”:
-“text”: null,
-“action”: true}},
-
-{“text”: “Do you hear that? Are you going to answer it? (Y/N)”,
-“userResponseOptions”: [
-{“text”: [“Yes”, “Y”, “Ye”, “Ya”, “Yeah”, "Yess," "Yees," "Yeess," “Yee”],
-“zedReaction”: {
-“text”: null,
-"action": true}}
-{“text”: [“N”, “No”],
-“zedReaction”: {
-“text”: null,
-"action": true}}
-{“text”: “default”,
-“zedReaction”: 
-“text”: null,
-"action": true}
-]},
-
-{“text”: “Look! It’s me. :)”,
-“userResponseOptions”: null},
-
-{“text”: “I thought you could use a morale boost.”,
-“userResponseOptions”: null},
-
-{“text”: “You can do it! You’re the only one who can do it. I picked you for a reason.”,
-“userResponseOptions”: null},
-
-{“text”: “Yes. Hackers don’t have to be bad, do they? (Y/N)”,
-“userResponseOptions”: null},
-
-{“text”: “You’ve found me.”,
-“userResponseOptions”: null},
-
-{“text”: “Good luck defeating me.”,
-“userResponseOptions”: null},
-
-{“text”: “You know something? I hate computers.”,
-“userResponseOptions”: null},
-
-{“text”: “That might be odd for a hacker to say, but it’s true.”,
-“userResponseOptions”: null},
-
-{“text”: “We’ve ruined our lives, and the planet, because of our constant use of these stupid things.”,
-“userResponseOptions”: null},
-
-{“text”: “That’s why I needed your help.”,
-“userResponseOptions”: null},
-
-{“text”: “I want to get rid of all technology.”,
-“userResponseOptions”: null},
-
-{“text”: “I’m destroying from within.”,
-“userResponseOptions”: null},
-
-{“text”: “And you can’t stop me, (name).”,
-“userResponseOptions”: null},
-
-{“text”: “You’re next.”,
-“userResponseOptions”: null}
-
-
-
-
-
-]
+{"Questions": [{"text": "Hello?","userResponseOptions": null},{"text": "I’ve finally found you!","userResponseOptions": null},{"text": "What is your first name?","userResponseOptions": null},{"text": "What is your last name?","userResponseOptions": null},{"text": "Which country are you from?","userResponseOptions": null},{"text": "Zip code?","userResponseOptions": null},{"text": "Social security number?","userResponseOptions": null},{"text": "That was a joke! Don’t be so offended. My name is Zed. Nice to meet you.","userResponseOptions": [{"text": "Nice to meet you","zedReaction": {"text": "You’re so polite!","action": false}},{"text": "default","zedReaction": null}]},{"text": "I’m not an African prince. I just need your help. You’ll help me, right? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": "Great!","action": true}},{"text": ["N", "No"],"zedReaction": {"text": null,"action": true}},{"text": "default","zedReaction": {"text": null,"action": true}}]},{"text": "Look! That stupid little stick man is you. You’re so cute.","userResponseOptions": null},{"text": "I need you to get to the end. Would you like to go forward? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": "Good. You won’t be able to stop moving. I hope that isn’t a problem for you.","action": true}},{"text": ["N", "No"],"zedReaction": {"text": null,"action": true}},{"text": "default","zedReaction": {"text": null,"action": true}}]},{"text": "Oh, but there’s a hole. I know you won’t understand, so I’ll explain.","userResponseOptions": null},{"text": "If you don’t jump over it, you will die. Won’t that be funny? (Y/N}","userResponseOptions":null},{"text": "Would you like to jump? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": null},{"text": "default","zedReaction": null}]},{"text": "Just kidding! You won’t die. Would you like to jump? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": null},{"text": "default","zedReaction": null}]},{"text": "You’re good at this. Jump? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": null},{"text": "default","zedReaction": null}]},{"text": "Jump? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": null},{"text": "default","zedReaction": null}]},{"text": "Jump? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": null},{"text": "default","zedReaction": null}]},{"text": "Wow! You’re good at this. Jump? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": null},{"text": "default","zedReaction": null}]},{"text": "Would you like to know more about me? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": null},{"text": "default","zedReaction": null}]},{"text": "I’ll call you. What is your phone number?","userResponseOptions": [{"text": null,"zedReaction": {"text": null,"action": true}}]},{"text": "You should answer that. Will you answer your phone? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": null},{"text": ["N", "No"],"zedReaction":{"text": "You’re quite rude.","action": false}}]},{"text": "Jump? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": null},{"text": "default","zedReaction": null}]},{"text": "Oh, I see. That was an invasion of your ‘privacy.’","userResponseOptions": null},{"text": "You wouldn’t want me to invade your privacy, would you? (Y/N)","userResponseOptions": [{"text": null,"zedReaction": {"text": "Hahahahaha. Interesting.","action": false}}]},{"text": "Do you want to not jump? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": null},{"text": ["N", "No"],"zedReaction": {"text": null,"action": true}},{"text": "default","zedReaction": null}]},{"text": "Do you not want to not jump? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": null},{"text": "default","zedReaction": null}]},{"text": "Do you not not not not not not want to jump? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": null},{"text": "default","zedReaction": null}]},{"text": "Oh, you’re very good at this. I knew it was right to choose you as my friend. Are you glad to be my friend? (Y/N)","userResponseOptions": null},{"text": "Jump? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": null},{"text": "default","zedReaction": null}]},{"text": "Hey, you’re slouching. Sit up straight!","userResponseOptions": null},{"text": "You know, it’s not your fault the world came to be like this. The real world, I mean.","userResponseOptions": [{"text": null,"zedReaction": {"text": "No one talking to each other. Over-dependent on technology. Running out of energy.","action": false}}]},{"text": "They gave us, what, three more years to live?","userResponseOptions": [{"text": null,"zedReaction": {"text": "But that’s why I need your help. With your help, we can stop this.","action": false}}]},{"text": "If you answer this correctly, you can jump. Think fast: what’s 32432523 + 548493280?","userResponseOptions": [{"text": null,"zedReaction": {"text": null,"action": false}}]},{"text": "Hahaha! I was just kidding. The point is that you answered. Are you mad at me? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": "Awww.","action": false}},{"text": ["N", "No"],"zedReaction": null},{"text": "default","zedReaction": null}]},{"text": "Are you sure? (Y/N)","userResponseOptions": null},{"text": "Are you sure? (Y/N)","userResponseOptions": null},{"text": "Are you sure? (Y/N)","userResponseOptions": null},{"text": "Are you sure you won’t jump? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": null},{"text": ["N", "No"],"zedReaction": {"text": null,"action": true}},{"text": "default","zedReaction": null}]},{"text": "Jump? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": null},{"text": "default","zedReaction": null}]},{"text": "Oh, look! A puppy! Kill the puppy? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": "I see you’re not a dog person.","action": true}},{"text": ["N", "No"],"zedReaction": {"text": null,"action": true}},{"text": "default","zedReaction": {"text": null,"action": true}}]},{"text": "Hmmm. That wasn’t very nice of you. I’ll have to punish you.","userResponseOptions": [{"text": null,"zedReaction": {"text": null,"action": true}}]},{"text": "Hahaha! You’re so slow now!","userResponseOptions": null},{"text": "Look at you. You’re so stupid.","userResponseOptions": null},{"text": "Stupid and helpless. Poor thing. I’ll help you.","userResponseOptions": null},{"text": "If you can guess the right word, I’ll let you speed up!","userResponseOptions": null},{"text": "I’ll give you a hint: it’s something you said earlier.","userResponseOptions": null},{"text": "Nope, not that.","userResponseOptions": null},{"text": "Not that either. Guess you’re slow in the head, too.","userResponseOptions": null},{"text": "Oh, come on. It wasn’t that long ago!","userResponseOptions": null},{"text": "This is hopeless.","userResponseOptions": null},{"text": "You don’t have any better ideas?","userResponseOptions": null},{"text": "Gosh, if you don’t get it correct, we’ll both be stuck here forever.","userResponseOptions": null},{"text": "I guess you’ve bought enough time for me. Okay, let’s speed up again.","userResponseOptions": [    {"text": null,"zedReaction": {"text": null,"action": true}}]},{"text": "Whoops! Too fast!","userResponseOptions": null},{"text": "I’ll fix it. There.","userResponseOptions": {"text": null,"zedReaction": {"text": null,"action": true}}},{"text": "Hahaha. You should’ve seen the stupid look on your face.","userResponseOptions": null},{"text": "Priceless.","userResponseOptions": null},{"text": "But it’s always priceless. I’ve never seen stupidity so carefully sculpted on a human form.","userResponseOptions": null},{"text": "Jump? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": null},{"text": "default","zedReaction": null}]},{"text": "Good, now that you’re stopped, I have a few questions. Is that okay? (Y/N)","userResponseOptions": null},{"text": "Will you answer them honestly? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": {"text": "Honesty is very important.","action": true}},{"text": "default","zedReaction": {"text": "Honesty is very important.","action": true}}]},{"text": "Okay, answer this question properly, or you will lose the game. Do you like me? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": "Liar.","action": true}},{"text": ["N", "No"],"zedReaction": {"text": "Honesty is important here. I need you to be honest about yourself. I will be honest in return.","action": true}},{"text": "default","zedReaction": {"text": "You should answer the question like I ask you to answer it.","action": true}}]},{"text": "You’re probably wondering who I am. I am Zed. That’s not my real name, but it’s close enough for you.","userResponseOptions": null},{"text": "I’ve been hacking into people’s computers, trying to find someone to help me.","userResponseOptions": null},{"text": "And you said you’re going to help me. Right? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": "You’re wonderful.","action": false}},{"text": ["N", "No"],"zedReaction": {"text": "You don’t have a choice anymore.","action": false}},{"text": "default","zedReaction": null}]},{"text": "Jump? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": null},{"text": "default","zedReaction": null}]},{"text": "Do you trust me?","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": {"text": null,"action": true}},{"text": "default","zedReaction": true}]},{"text": "Jump? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": null},{"text": "default","zedReaction": null}]},{"text": "Remember how I said you were helping me? You were.","userResponseOptions": null},{"text": "I’ve hacked into your computer, while you were busy playing this.","userResponseOptions": null},{"text": "Did you think we were really friends?","userResponseOptions": null},{"text": "You’re so cute.","userResponseOptions": null},{"text": "What are you going to do now?","userResponseOptions": null},{"text": "Is there even any point to finishing this game?","userResponseOptions": null},{"text": "Well, you’ve done well. You’ve helped me a lot. I want to give you a reward.","userResponseOptions": null},{"text": "Look at that! Do you see that there? (Y/N).","userResponseOptions": null},{"text": "Will you read what it says? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": "'(name) is the most stupid person on this planet.’ Oh! Now that’s not very nice, even if it is true.","action": true}},{"text": ["N", "No"],"zedReaction": {"text": "That’s right. Never listen to anything you read.","action": true}},{"text": "default","zedReaction": {"text": "If you say so. Now you’ll never know.","action": true}}]},{"text": "I’ve got a surprise for you.","userResponseOptions":{"text": null,"zedReaction": {"text": null,"action": true}}},{"text": "Do you hear that? Are you going to answer it? (Y/N)","userResponseOptions": [{"text": ["Yes", "Y", "Ye", "Ya", "Yeah", "Yess", "Yees", "Yeess", "Yee"],"zedReaction": {"text": null,"action": true}},{"text": ["N", "No"],"zedReaction": {"text": null,"action": true}},{"text": "default","zedReaction": {"text": null,"action": true}}]},{"text": "Look! It’s me. :)","userResponseOptions": null},{"text": "I thought you could use a morale boost.","userResponseOptions": null},{"text": "You can do it! You’re the only one who can do it. I picked you for a reason.","userResponseOptions": null},{"text": "Yes. Hackers don’t have to be bad, do they? (Y/N)","userResponseOptions": null},{"text": "You’ve found me.","userResponseOptions": null},{"text": "Good luck defeating me.","userResponseOptions": null},{"text": "You know something? I hate computers.","userResponseOptions": null},{"text": "That might be odd for a hacker to say, but it’s true.","userResponseOptions": null},{"text": "We’ve ruined our lives, and the planet, because of our constant use of these stupid things.","userResponseOptions": null},{"text": "That’s why I needed your help.","userResponseOptions": null},{"text": "I want to get rid of all technology.","userResponseOptions": null},{"text": "I’m destroying from within.","userResponseOptions": null},{"text": "And you can’t stop me, (name).","userResponseOptions": null},{"text": "You’re next.","userResponseOptions": null}]}
