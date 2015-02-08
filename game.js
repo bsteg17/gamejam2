@@ -1,8 +1,5 @@
 // Constants
 var ROWS_OF_GROUND = 2; // The number of rows from the bottom of the array that are going to serve as the ground
-var showTheAction = false;
-var dialogue = JSON.parse(ZedDialogue);
-console.log(dialogue["questions"][0]["text"]);
 
 // Create the canvas
 var canvas = document.createElement("canvas");
@@ -602,8 +599,7 @@ var update = function (modifier) {
 
 // Draw everything
 var render = function () {
-    if (showTheAction) {
-        // Make sure that the grass and sand have been read in
+    // Make sure that the grass and sand have been read in
 	if( blackBgTileReady && greenBgTileReady ) {
         // Draw the array
         for( var i = 0; i < mapArray.length; i++ ) {
@@ -667,7 +663,6 @@ var render = function () {
     ctx.moveTo(hero.torso2UpperLegPosX, hero.torso2UpperLegPosY);
     ctx.lineTo(hero.upper2LowerLegPosX2, hero.upper2LowerLegPosY2);
     ctx.stroke();
-}
 	
 
 	// Draw command screen
