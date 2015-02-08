@@ -101,24 +101,25 @@ for (i = 48; i < 91; i++) {
     if (i < 58 || i > 64) {
         alphanumeric.push(String.fromCharCode(i));
     }
-    console.log(alphanumeric[i]); //debug
+}
+alphanumeric.push("period");
+alphanumeric.push("QuestionMark");
+alphanumeric.push("Apostrophe");
+alphanumeric.push("ExclamationPoint");
+alphanumeric.push("LeftParenth");
+alphanumeric.push("RightParenth");
+alphanumeric.push("Slash");
+
+var chars = {}; // create an empty array
+
+for (i = 0; i < 43; i++) {
+    chars[alphanumeric[i]] = new Image();
 }
 
-//Character images
-var charReady = [];
-for (i = 0; i < 37; i++) {
-    charReady.push(false);
-}
-var charImages = [];
-for (i = 0; i < 37; i++) {
-    charImages.push(new Image());
-    charImages[i].onload = function () {
-        charReady = true;
-    };
-    charImages[i].src = "Content/Alphanumeric/" + alphanumeric[i] + ".png";
+for (var char in chars) {
+    chars[char].src = "Content/Alphanumeric/" + char + ".png";
 }
   
-greenBgTile.src = "Content/greenBlock.png";
 
 // Set start position for grass and sand
 var posX = 0;
@@ -182,21 +183,30 @@ var cursor = {
     blinking: false
 };
 
+
+var zed = {
+    currentQuestionResponse: {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+        maxChars: 0,
+        question: null,
+        responses: []
+    },
+    previousQuestionResponses: [],
+    futureQuestionResponses: []
+};
+
 var createGround = function(){
-	console.log( mapArray.length );
 
 	// Change the bottom x lines of the mapGrid to ground values
 	for(i = mapArray.length - 1; i > ( mapArray.length - ( ROWS_OF_GROUND + 1 ) ); i--) {
-		console.log(i);
 	
 		for(var j = 0; j < mapGrid.rowSize; j++){
-			console.log(j);
-		
-			console.log(mapArray[i][j]);
 		
 			mapArray[i][j] = 1;
-			
-			console.log(mapArray[i][j]);
+
 		}
 		//mapArray[i] = 1;
 	}
@@ -246,9 +256,9 @@ var initCommandLine = function () {
     commandLine.y = canvas.height - 20;
     commandLine.width = canvas.width - 20;
     commandLine.height = 10;
-    commandLine.charWidth = 5;
+    commandLine.charWidth = 7;
     commandLine.string = [];
-    commandLine.maxChars = 10;
+    commandLine.maxChars = 30;
     commandLine.keyPressed = null;
     commandLine.mayType = true;
 };
@@ -269,24 +279,17 @@ var getCharacterPosition = function() {
 };
 
 addEventListener("keyup", function (e) {
+    commandLine.keyPressed = null;
     commandLine.mayType = true;
 }, false);
 
 addEventListener("keydown", function (e) {
     if (commandLine.mayType == true) {
+        console.log("keychange");
         commandLine.keyPressed = e.keyCode;
+        commandLine.mayType = true;
     }
 }, false);
-
-// Reset the game when the player catches a monster
-var reset = function () {
-	hero.x = canvas.width / 2;
-	hero.y = canvas.height / 2;
-
-	// Throw the monster somewhere on the screen randomly
-	monster.x = 32 + (Math.random() * (canvas.width - 64));
-	monster.y = 32 + (Math.random() * (canvas.height - 64));
-};
 
 var updateCommandLine = function () {
     //Update cursor position
@@ -305,29 +308,8 @@ var sendResponse = function () {
 
 // Update game objects
 var update = function (modifier) {
-	//if (38 in keysDown) { // Player holding up
-	//	hero.y -= hero.speed * modifier;
-	//}
-	//if (40 in keysDown) { // Player holding down
-	//	hero.y += hero.speed * modifier;
-	//}
-	//if (37 in keysDown) { // Player holding left
-	//	hero.x -= hero.speed * modifier;
-	//}
-	//if (39 in keysDown) { // Player holding right
-	//	hero.x += hero.speed * modifier;
-	//}
 
-	//// Are they touching?
-	//if (
-	//	hero.x <= (monster.x + 32)
-	//	&& monster.x <= (hero.x + 32)
-	//	&& hero.y <= (monster.y + 32)
-	//	&& monster.y <= (hero.y + 32)
-	//) {
-	//	++monstersCaught;
-	//	reset();
-    //}
+    var pressed = false;
 
     if (commandLine.mayType) {
         if (commandLine.keyPressed == 8) {
@@ -335,20 +317,25 @@ var update = function (modifier) {
                 commandLine.string.pop();
                 cursor.position -= 1;
             }
-            commandLine.mayType = false;
+            pressed = true;
         } else if (commandLine.keyPressed >= 48 && commandLine.keyPressed < 91) {
             if (cursor.position <= commandLine.maxChars) {
                 commandLine.string.push(String.fromCharCode(commandLine.keyPressed));
                 cursor.position += 1;
             }
-            commandLine.mayType = false;
+            pressed = true;
         } else if (commandLine.keyPressed == 13) {
             commandLine.string = [];
             cursor.position = 0;
             sendResponse();
+            pressed = true;
         } else {
             console.log("WRONG KID DIED"); //debug
         }
+    }
+
+    if (pressed) {
+        commandLine.mayType = false;
     }
 
     updateCommandLine();
@@ -394,7 +381,7 @@ var render = function () {
 	};
 	if (commandLine.string.length > 0) {
 	    for (i = 0; i < commandLine.string.length; i++) {
-	        ctx.drawImage(charImages[i], commandLine.x + (cursor.width * commandLine.position), cursor.y, cursor.width, cursor.height);
+	        ctx.drawImage(chars[commandLine.string[i]], commandLine.x + (cursor.width * i), cursor.y, cursor.width, cursor.height);
 	    }
 	}
 	if (cursorReady && cursor.blinking) {
@@ -433,5 +420,4 @@ initCommandLine();
 initCursor();
 //createCharacter();
 var then = Date.now();
-reset();
 main();
