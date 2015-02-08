@@ -126,7 +126,7 @@ var posY = 0;
 
 // Game objects
 var hero = {
-	speed: 256, // movement in pixels per second
+	speed: 100, // movement in pixels per second
 	x: 0,
 	y: 0,
 	armPosition: 1,
@@ -151,7 +151,14 @@ var hero = {
 	upper2LowerLegPosX1: 0,
 	upper2LowerLegPosY1: 0,
 	upper2LowerLegPosX2: 0,
-	upper2LowerLegPosY2: 0
+	upper2LowerLegPosY2: 0,
+	startingAnimationTime: 0,
+	animationSpeed: 0,
+	armPositionVariance1: 0,
+	armPositionVariance2: 0,
+	legPositionVariance1: 0,
+	legPositionVariance2: 0
+	
 };
 var monster = {
 	x: 0,
@@ -341,6 +348,14 @@ var initCharacterPosition = function() {
 	hero.upper2LowerLegPosX2 = hero.torso2UpperLegPosX - 13;
 	hero.upper2LowerLegPosY2 = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND);
 	//hero.upper2LowerLegPosY2 = ( theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND) ) - hero.torso2UpperLegPosY;
+	hero.startingAnimationTime = Date.now();
+	hero.animationSpeed = 300;
+	
+	// Initialize
+	hero.armPositionVariance1 = -20;
+	hero.armPositionVariance2 = 20;
+	hero.legPositionVariance1 = -13;
+	hero.legPositionVariance2 = 13;
 };
 
 addEventListener("keyup", function (e) {
@@ -371,8 +386,17 @@ var sendResponse = function () {
 
 };
 
+//// Make the character jump
+//var jump = function () {
+//
+//};
+
 // Update the body parts based on the x-position of the head
 var updateBodyPartsPosition = function(headPosX) {
+	// Initialize variables
+	var now = Date.now();
+	var moved = false;
+	
 	// Determine the position of the hero's torso
 	hero.head2TorsoPosX = headPosX + Math.sqrt( hero.headSize );
 	hero.head2TorsoY = hero.headPosY + hero.headSize;
@@ -385,64 +409,64 @@ var updateBodyPartsPosition = function(headPosX) {
 	hero.torso2UpperArmPosX = hero.head2TorsoPosX;
 	hero.torso2UpperArmPosY = hero.head2TorsoY + 12;
 	
-	// Determine the current position of the character's arms
-	if(hero.armPosition == 0) {
+	if (now > hero.startingAnimationTime + hero.animationSpeed) {	// Determine the current position of the character's arms
+        // Set the direction of the arm position
+	    if (-20 <= hero.armPositionVariance1) {
+	        armPositionDirection = -1;
+	    } else if (20 >= hero.armPositionVariance1) {
+	        armPositionDirection = 1;
+	    } else {
+	        console.log("error");
+	    }
+	
 		// Determine the position variance from the torso of arm #1
-		armPositionVariance1 = -20
+	    hero.armPositionVariance1 = hero.armPositionVariance1  + (10 * armPositionDirection);
 		// Determine the position variance from the torso of arm #2
-		armPositionVariance2 = 20
-		
-		// Update the arm position value
-		hero.armPosition = hero.armPosition + 1;
-	} else if (hero.armPosition == 1) {
-		// Determine the position variance from the torso of arm #1
-		armPositionVariance1 = 0
-		// Determine the position variance from the torso of arm #2
-		armPositionVariance2 = 0
+	    hero.armPositionVariance2 = hero.armPositionVariance2 + (10 * armPositionDirection);
 
-		// Update the arm position value
-		hero.armPosition = hero.armPosition - 1;
-	} else {
-		// Output error message
-		console.log( "error" );
+        // Indicate that the start animation time should be updated
+		moved = true;
 	}
 	
 	// Determine the joint between the upper and lower arm of the hero's lower arm #1
-	hero.upper2LowerArmPosX1 = hero.torso2UpperArmPosX + armPositionVariance1;
+	hero.upper2LowerArmPosX1 = hero.torso2UpperArmPosX + hero.armPositionVariance1;
 	hero.upper2LowerArmPosY1 = hero.torso2UpperArmPosY + 25;
 	
 	// Determine the joint between the upper and lower arm of the hero's lower arm #2
-	hero.upper2LowerArmPosX2 = hero.torso2UpperArmPosX + armPositionVariance2;
+	hero.upper2LowerArmPosX2 = hero.torso2UpperArmPosX + hero.armPositionVariance2;
 	hero.upper2LowerArmPosY2 = hero.torso2UpperArmPosY + 25;
 	
-	if(hero.legPosition == 0) {
-		// Determine the position variance from the torso of arm #1
-		legPositionVariance1 = -13
-		// Determine the position variance from the torso of arm #2
-		legPositionVariance2 = 13
-		
-		// Update the arm position value
-		hero.legPosition = hero.legPosition + 1;
-	} else if (hero.legPosition == 1) {
-		// Determine the position variance from the torso of arm #1
-		legPositionVariance1 = 0
-		// Determine the position variance from the torso of arm #2
-		legPositionVariance2 = 0
-		
-		// Update the arm position value
-		hero.legPosition = hero.legPosition - 1;
-	} else {
-		// Output error message
-		console.log( "error" );
+	if (now > hero.startingAnimationTime + hero.animationSpeed) {
+	    // Set the direction of the arm position
+	    if (-13 <= hero.legPositionVariance1) {
+	        legPositionDirection = -1;
+	    } else if (13 >= hero.legPositionVariance1) {
+	        legPositionDirection = 1;
+	    } else {
+	        console.log("error");
+	    }
+
+	    // Determine the position variance from the torso of arm #1
+	    hero.legPositionVariance1 = hero.legPositionVariance1 + (10 * legPositionDirection);
+	    // Determine the position variance from the torso of arm #2
+	    hero.legPositionVariance2 = hero.legPositionVariance2 + (10 * legPositionDirection);
+
+	    // Indicate that the start animation time should be updated
+	    moved = true;
 	}
 	
 	// Determine the position of the hero's upper leg #1
-	hero.upper2LowerLegPosX1 = hero.torso2UpperLegPosX + legPositionVariance1;
+	hero.upper2LowerLegPosX1 = hero.torso2UpperLegPosX + hero.legPositionVariance1;
 	hero.upper2LowerLegPosY1 = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND);
 
 	// Determine the position of the hero's upper leg #2
-	hero.upper2LowerLegPosX2 = hero.torso2UpperLegPosX + legPositionVariance2;
+	hero.upper2LowerLegPosX2 = hero.torso2UpperLegPosX + hero.legPositionVariance2;
 	hero.upper2LowerLegPosY2 = theAction.height - (mapGrid.tileHeight * ROWS_OF_GROUND);
+	
+    // Update the start animation time if indicated to do so
+	if (moved) {
+		hero.startingAnimationTime = Date.now();
+	}
 };
 
 // Update game objects
@@ -577,7 +601,7 @@ var main = function () {
 	var now = Date.now();
 	var delta = now - then;
 
-	update(delta / 10000);
+	update(delta / 1000);
 	render();
 
 	then = now;
