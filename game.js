@@ -640,42 +640,34 @@ addEventListener("keyup", function (e) {
     
 }, false);
 
-var mayRespond = false;
-
 addEventListener("keydown", function (e) {
-    if (mayRespond) {
-        commandLine.keyPressed = e.keyCode;
-        if (commandLine.keyPressed == 8) {
-            if (cursor.position > 0) {
-                commandLine.string.pop();
-                cursor.position -= 1;
-            }
-            pressed = true;
-        } else if (commandLine.keyPressed >= 48 && commandLine.keyPressed < 91) {
-            if (cursor.position <= commandLine.maxChars) {
-                commandLine.string.push(String.fromCharCode(commandLine.keyPressed));
-                cursor.position += 1;
-            }
-            pressed = true;
-        } else if (commandLine.keyPressed == 32) {
-            if (cursor.position <= commandLine.maxChars) {
-                commandLine.string.push(String.fromCharCode(commandLine.keyPressed));
-                cursor.position += 1;
-            }
-            pressed = true;
-        } else if (commandLine.keyPressed == 13) {
-            var str = "";
-            for (j = 0; j < commandLine.string.length; j++) {
-                str = str.concat(commandLine.string[j]);
-            }
-            commandLine.string = [];
-            cursor.position = 0;
-            sendResponse(str);
-            pressed = true;
-            mayRespond = false;
-        } else {
-            console.log("WRONG KID DIED"); //debug
+
+    commandLine.keyPressed = e.keyCode;
+    if (commandLine.keyPressed == 8) {
+        if (cursor.position > 0) {
+            commandLine.string.pop();
+            cursor.position -= 1;
         }
+    } else if (commandLine.keyPressed >= 48 && commandLine.keyPressed < 91) {
+        if (cursor.position <= commandLine.maxChars) {
+            commandLine.string.push(String.fromCharCode(commandLine.keyPressed));
+            cursor.position += 1;
+        }
+    } else if (commandLine.keyPressed == 32) {
+        if (cursor.position <= commandLine.maxChars) {
+            commandLine.string.push(String.fromCharCode(commandLine.keyPressed));
+            cursor.position += 1;
+        }
+    } else if (commandLine.keyPressed == 13) {
+        var str = "";
+        for (j = 0; j < commandLine.string.length; j++) {
+            str = str.concat(commandLine.string[j]);
+        }
+        commandLine.string = [];
+        cursor.position = 0;
+        sendResponse(str);
+    } else {
+        console.log("WRONG KID DIED"); //debug
     }
 }, false);
 
@@ -690,7 +682,7 @@ var updateCommandLine = function () {
     }
 };
 
-var adjustZedLines = function (str) {
+var adjustCommandLine = function (str) {
     for (j = zedLines.lines.length - 1; j > 0; j--) {
         zedLines.lines[j].string = zedLines.lines[j - 1].string;
     }
@@ -752,6 +744,10 @@ var adjustZedLines = function (str) {
 //        hero.startingAnimationTime = Date.now();
 //    }
 //};
+
+var jump = function () {
+
+};
 
 // Update the body parts based on the x-position of the head
 var updateBodyPartsPosition = function(headPosX) {
@@ -872,18 +868,61 @@ var updateBodyPartsPosition = function(headPosX) {
 	}
 };
 
-var sendResponse = function (str) {
-    adjustZedLines(str);
+//The in-game event that results from zed/player response.
+var gameReacts = function (str) { //In the future, the parameters will probably be some sort of (question,response) pairing.
+    str = str.toUpperCase();
+    switch (str) {
+        case "YES":
+            console.log("JUMPED"); //debug
+            jump();
+            break;
+        case "Y":
+            console.log("JUMPED"); //debug
+            jump();
+            break;
+        default:
+            break;
+    }
 };
 
+//Sends player's response to Zed
+var sendResponse = function (str) {
+    adjustCommandLine(str);
+    zedReacts(str);
+};
+
+var getZedResponse = function (str) { //As with gameReacts' params, str here will in the future be something more sophisticated.
+    str = str.toUpperCase();
+    switch (str) {
+        case "YES":
+            adjustCommandLine("Okay sheesh. If you say so.");
+            break;
+        case "Y":
+            adjustCommandLine("Okay sheesh. If you say so.");
+            break;
+        default:
+            break;
+    }
+};
+
+//Zed reacts with text (if applicable) and causes an in-game reaction (if applicable)
 var currentQuestion = 0;
-var zedSpeaks = function () {
-    adjustZedLines("Jump?");
-    mayRespond = true;
-}
+var questions = ["Jump?", "Jump?", "Jump?"]; //In the future we will be using the JSON object instead 
+var zedReacts = function (playerResponse) {
+
+    //Zed's response to player's response (said before next question is asked.)
+    getZedResponse(playerResponse);
+    
+    //In-game consequences of reaction (if there are any.)
+    gameReacts(playerResponse);
+
+    //Asks next question
+    adjustCommandLine(questions[currentQuestion]);
+    currentQuestion++;
+};
 
 // Update game objects
-var temp = true;
+
 var update = function (modifier) {
     // When the player gets to the edge of the screen...
 	if (hero.headPosX >= mapGrid.width) {
@@ -903,13 +942,6 @@ var update = function (modifier) {
 	    //    jump();
 	    //}
 	}
-	
-    var pressed = false;
-
-    if (temp) {
-        zedSpeaks();
-    }
-    temp = false;
     updateCommandLine();
 };
 
@@ -1076,4 +1108,7 @@ initZedLines();
 initCursor();
 initCharacterPosition();
 var then = Date.now();
+
+//first question
+adjustCommandLine(questions[currentQuestion]);
 main();
